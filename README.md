@@ -2,7 +2,7 @@
 
 Materials for my taxa abundance/metagenomics hands-on training session
 
-* Working with taxa abundance data in R
+* [Working with taxa abundance data in R](TaxaAbundance.md)
 * Working with the EBI Metagenomics portal from R
 * **Exercise** on taxa abundance data retrieval and analysis
 * Advanced software for diversity and coverage estimation
