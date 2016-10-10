@@ -1,6 +1,6 @@
 # Metagenomics data in R
 
-Materials for my taxa abundance/metagenomics hands-on training session
+Materials for taxa abundance/metagenomics hands-on training session
 
 4 parts: roughly 20 minutes each
 
@@ -10,6 +10,8 @@ Materials for my taxa abundance/metagenomics hands-on training session
 * [Advanced software for diversity and coverage estimation](Advanced.md)
 
 
-(C) 2016 Darren J Wilkinson
+
+
+### (C) 2016 Darren J Wilkinson
 
 
