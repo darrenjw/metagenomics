@@ -186,6 +186,12 @@ dim(run)
 
 The taxa abundance count data now downloaded into the R session can be utilised in the same way as any other species abundance data in R.
 
+Note that the package includes the function `convertOtuTad()` which re-tabulates OTU counts as a taxa abundance distribtion (TAD), and `plotOtu()`, which does a selection of 4 plots for a given set of OTU counts.
+
+```r
+head(convertOtuTad(run))
+plotOtu(run)
+```
 
 
 #### (C) 2016 Darren J Wilkinson
