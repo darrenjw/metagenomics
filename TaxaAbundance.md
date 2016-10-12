@@ -108,6 +108,10 @@ plot(octav(bci))
 
 The interpretation here is that there are 19 species having an abundance of 1, there are 13 species having an abundance of 2, 14 species having an abundance of 3 or 4, 18 species with an abundance of 5-8, etc.
 
+### Simulating SAD/TAD data
+
+The `sads` package also includes the `rsad()` function for simulating synthetic species/taxa abundance data. This can be very useful for testing analysis workflows and statistical estimation procedures.
+
 
 
 
@@ -150,7 +154,7 @@ plot(oc,main="Preston plot")
 plot(rad(comm),"Rank abundance")
 ```
 
-### Model fitting
+### Statistically fitting species abundance models to data
 
 ```r
 > print(estimateR(comm))
@@ -197,6 +201,11 @@ Truncation point: 0
 Log-likelihood: -122.64 
 > plot(mod)
 ```
+
+
+### Estimation of diversity
+
+
 
 R Script: [`sads-test.R`](https://gist.github.com/darrenjw/b946d9e0d871d03411af)
 
