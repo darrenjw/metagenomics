@@ -76,7 +76,7 @@ rownames(pl)
 A list of studies containing at least 100 samples can be obtained with:
 
 ```r
-ps$Study.ID[pl$Number.Of.Samples >= 100]
+pl$Study.ID[pl$Number.Of.Samples >= 100]
 ```
 
 A list of studies with name containing particluar text can be obtained with commands like:
