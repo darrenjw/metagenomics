@@ -1,13 +1,13 @@
 # Advanced software for diversity and coverage estimation
 
-### Limitations of (much) available software}
+## Limitations of (much) available software
 
 * Most packages have been designed with more classical population ecology examples in mind, and not all algorithms scale (well) to the very large number of species often observed in metagenomic samples
 * Many algorithms are rather simplistic and produce poor estimates
 * Most SAD fitting algorithms fit directly to the *observed* SAD, rather than the unobserved *population* SAD - yet it is typically the population SAD that is of scientific interest
 * Despite the large uncertainties present, many algorithms either provide point estimates only, or provide simple interval estimates - they can't easily *propagate uncertainty* to downstream derived parameters, such as an estimate of required sequencing effort
 
-### Bayesian methods
+## Bayesian methods
 
 * Bayesian hierarchical models provide an elegant framework for describing all observed and unobserved quantities in a statistical model, incorporating both *model* and *parameter uncertainty*, including
   * uncertainty about the parametric form of the true population SAD
@@ -15,9 +15,9 @@
   * the number of (unobserved) species in the population
 * The output from the MCMC algorithm is a (large) sample from the posterior distribution over models and parameters, describing the uncertainty remaining having observed the data
 * The MCMC sample can be used to correctly *propagate uncertainty* to derived parameters, such as an estimate of required sequencing effort
-}
 
-#### Existing MCMC software
+
+### Existing MCMC software
 
 [BDES](http://userweb.eng.gla.ac.uk/christopher.quince/Software/BDES.html) --- Bayesian Diversity Estimation Software (Google search: `Quince BDES`) --- proof-of-concept software associated with:
 
@@ -28,8 +28,9 @@ Quince, Curtis, Sloan (2008) [The rational exploration of microbial diversity](h
 * Command-line
 * Not particularly well documented or user-friendly
 * Not very robust, especially for TADs arising from large metagenomic samples
+* But still a useful set of tools for people with good scientific computing skills
 
-#### Software under development
+### Software under development
 
 * Using the same basic ideas and algorithms from BDES, but re-written from scratch in Scala to run on the JVM
 * One algorithm to analyse all models simultaneously
@@ -42,6 +43,11 @@ Quince, Curtis, Sloan (2008) [The rational exploration of microbial diversity](h
 Currently in development --- experimental release for demo purposes...
 
 Eventually hope to include in EBI Metagenomics analysis pipeline...
+
+#### Demo
+
+**TODO**
+
 
 ## Summary
 
