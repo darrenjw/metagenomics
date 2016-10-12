@@ -12,6 +12,6 @@ Materials for taxa abundance/metagenomics hands-on training session
 
 
 
-### (C) 2016 Darren J Wilkinson
+#### (C) 2016 Darren J Wilkinson
 
 

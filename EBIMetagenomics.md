@@ -188,6 +188,6 @@ The taxa abundance count data now downloaded into the R session can be utilised 
 
 
 
-### (C) 2016 Darren J Wilkinson
+#### (C) 2016 Darren J Wilkinson
 
 
