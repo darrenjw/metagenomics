@@ -112,47 +112,54 @@ The interpretation here is that there are 19 species having an abundance of 1, t
 
 The `sads` package also includes the `rsad()` function for simulating synthetic species/taxa abundance data. This can be very useful for testing analysis workflows and statistical estimation procedures.
 
+One of the key statistical issues in modelling data of this sort is partial observation. Typically one will not actually measure every individual in an ecological community of interest, but instead the individuals in a small fraction of the population, hopefully a random sample. The `bci` dataset is a case in point. Ecologists are not especially interested in the 50 ha plot they studied, but rather in the whole forest, and they hope that they can infer something useful about the forest by extrapolating what they know about the plot they studied. This raises some non-trivial statistical issues. Exactly the same issues arise in the context of metagenomics.
 
-
+Let's start by generating a synthetic data set corresponding to a fully observed population containing 1000 species having a log-normal TAD.
 
 ```r
-
-# simulated data
-
-# full obs
+set.seed(123)
 comm = rsad(S=1000,frac=1,sad="lnorm",coef=list(meanlog=5,sdlog=2))
+length(comm)
+sum(comm)
+```
 
-barplot(comm,xlab="Species",ylab="Abundance")
-comm = comm[order(-comm)]
-barplot(comm,xlab="Species",ylab="Abundance")
+Note that I just set the random seed for reproducibility. Also note that there aren't exactly 1,000 species in the sample (due to the sampling model and species with very low abundance), and that the sample corresponds to the identification of over 1 million individuals. So in the context of metagenomics, this might correspond to over 1 million 16S matches in a sequencing run clustered into roughly 1,000 OTUs. We now know how to plot this kind of data:
 
-tad = as.data.frame(table(comm))
-names(tad) = c("Abundance","# taxa")
-
+```r
+op=par(mfrow=c(2,2))
+barplot(comm,xlab="Species",ylab="Abundance",main="Taxa abundance")
+tad = abund2sad(comm)
 barplot(tad[,2],names.arg=tad[,1],xlab="Abundance",
                                 ylab="# species",main="TAD")
-tad$Abundance = as.numeric(as.character(tad$Abundance))
-
-oc = octav(comm)
-plot(oc,main="Preston plot")
-plot(rad(comm),"Rank abundance")
-
-# fractional obs
-comm=rsad(S=1000,frac=0.0002,sad="lnorm",
-                                meanlog=5,sdlog=2)
-barplot(comm,xlab="Species",ylab="Abundance")
-comm = comm[order(-comm)]
-
-tad = as.data.frame(table(comm))
-names(tad) = c("Abundance","# taxa")
-barplot(tad[,2],names.arg=tad[,1],xlab="Abundance",
-                          ylab="# species",main="TAD")
-tad$Abundance = as.numeric(as.character(tad$Abundance))
-
-oc = octav(comm)
-plot(oc,main="Preston plot")
-plot(rad(comm),"Rank abundance")
+plot(octav(comm),main="Preston plot")
+plot(rad(comm),main="Rank abundance")
+par(op)
 ```
+
+Note that the Preston plot looks very Gaussian, which is as we would expect, due to simulating from a log-normal TAD.
+
+Now let simulate a synthetic sample corresponding to a small fraction (0.05%) of the same population with 1,000 species. 
+
+```r
+comm=rsad(S=1000,frac=0.0005,sad="lnorm",coef=list(meanlog=5,sdlog=2))
+length(comm)
+sum(comm)
+```
+
+Here we have only observed 190 species, corresponding to 407 individuals. We can plot this using exactly the same code as before.
+
+```r
+op=par(mfrow=c(2,2))
+barplot(comm,xlab="Species",ylab="Abundance",main="Taxa abundance")
+tad = abund2sad(comm)
+barplot(tad[,2],names.arg=tad[,1],xlab="Abundance",
+                                ylab="# species",main="TAD")
+plot(octav(comm),main="Preston plot")
+plot(rad(comm),main="Rank abundance")
+par(op)
+```
+
+The key point to notice is that the species abundance distribution for this fractional sample looks very different to the "true" distribution for the fully observed sample, so statistical methods will be required to try and infer something about the true TAD using the observed TAD.
 
 ### Statistically fitting species abundance models to data
 
@@ -207,7 +214,7 @@ Log-likelihood: -122.64
 
 
 
-R Script: [`sads-test.R`](https://gist.github.com/darrenjw/b946d9e0d871d03411af)
+R Script: [`sads-test.R`](https://gist.github.com/darrenjw/b946d9e0d871d03411af) - **TODO: update to a demo script in this directory** 
 
 
 
