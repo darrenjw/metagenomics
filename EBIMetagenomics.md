@@ -94,7 +94,7 @@ The information relating to one particular study can be extracted with, eg.
 pl["ERP001736",]
 ```
 
-## Working with a project summary
+### Working with a project summary
 
 Once a study of interest has been identified, a more detailed project summary can be downloaded into a data frame with, eg.
 
@@ -143,7 +143,7 @@ Given a particular sample ID, a list of runs associated with that sample ID can 
 runsBySample(ps,"SRS711891")
 ```
 
-## Working with taxa abundance data
+### Working with taxa abundance data
 
 The project summary file contains all of the information needed to be able to directly query the EBI servers for run data. In principle this could be used for querying any run data held on the servers, but currently this package only has functions for querying [OTU](https://en.wikipedia.org/wiki/Operational_taxonomic_unit) data. OTU data associated with a particular run can be downloaded into a data frame with, eg.
 
