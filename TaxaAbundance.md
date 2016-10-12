@@ -141,6 +141,7 @@ Note that the Preston plot looks very Gaussian, which is as we would expect, due
 Now let simulate a synthetic sample corresponding to a small fraction (0.05%) of the same population with 1,000 species. 
 
 ```r
+commFull=comm
 comm=rsad(S=1000,frac=0.0005,sad="lnorm",coef=list(meanlog=5,sdlog=2))
 length(comm)
 sum(comm)
@@ -163,58 +164,51 @@ The key point to notice is that the species abundance distribution for this frac
 
 ### Statistically fitting species abundance models to data
 
+For our synthetic data problem we have kept both the "full" sample and the fractionally observed sample. As an initial sanity check, we can try fitting a SAD model to our full sample, using the function `fitsad()` in the `sads` package.
+
 ```r
-> print(estimateR(comm))
-    S.obs   S.chao1  se.chao1     S.ACE    se.ACE 
-114.00000 321.56250  69.70477 356.01381  11.74045 
-> mod = fitsad(comm)
-> print(mod)
-Maximum likelihood estimation
-Type: continuous  species abundance distribution
-Species: 114 individuals: 196 
-
-Call:
-mle2(minuslogl = function (N, S) 
--sum(dbs(x = x, N = N, S = S, log = TRUE)), fixed = list(N = 196L, 
-    S = 114L), data = list(x = list(12, 9, 7, 7, 6, "etc")), 
-    eval.only = TRUE)
-
-Coefficients:
-  N   S 
-196 114 
-
-Log-likelihood: -175.77 
-> plot(mod)
-
-> mod=fitsad(comm,"poilog")
-> print(mod)
-Maximum likelihood estimation
-Type: discrete  species abundance distribution
-Species: 114 individuals: 196 
-
-Call:
-mle2(minuslogl = function (mu, sig) 
--sum(dtrunc("poilog", x = x, coef = list(mu = mu, sig = sig), 
-    trunc = trunc, log = TRUE)), start = list(mu = -3.53145726216054, 
-    sig = 1.90294684566867), data = list(x = list(12, 9, 7, 7, 
-    6, "etc")))
-
-Coefficients:
-       mu       sig 
--3.531457  1.902947 
-
-Truncation point: 0 
-
-Log-likelihood: -122.64 
-> plot(mod)
+mod = fitsad(commFull,"lnorm")
+summary(mod)
+par(mfrow=c(2,2))
+plot(mod)
+par(op)
 ```
 
+We confirm that in this case our fit to a log-normal SAD is excellent, and our estimated coefficients are very close to the "true" values of 5 and 2. Now let's try again with our fractional sample.
+
+```r
+mod = fitsad(comm,"lnorm")
+summary(mod)
+par(mfrow=c(2,2))
+plot(mod)
+par(op)
+```
+
+Here we see that the fit is rather poor, and that the estimated parameters are also far from the true values used to generate the data. However, we know that our sample has been generated from a (Poisson) sampling mechanism from an underlying log-normal population. This is consistent with a Poisson-log-normal model, so we can re-fit using that.
+
+```r
+mod = fitsad(comm,"poilog")
+summary(mod)
+par(mfrow=c(2,2))
+plot(mod)
+par(op)
+```
+
+Here we see that the fit is much better, but the parameter estimates still look poor. However, the distribution theory underpinning the Poisson-log-normal suggests that the sample should have theoretical mean and standard deviation of 5+log(0.0005)=-2.6 and 2, which aren't so far away from the estimates.
+
+See the vignette for the package: `vignette("sads_intro",package="sads")` for a more detailed discussion of model fitting and selection using this package.
 
 ### Estimation of diversity
 
+Given the observed sample, and its observed species richness, it is natural to want to estimate the true biodiversity of the population that has been sampled. As previously discussed, this is a non-trivial statistical problem, but there are some well-known estimators implemented in the `vegan` package. We can load up `vegan` and compute some estimates as follows.
 
+```r
+library(vegan)
+estimateR(commFull)
+estimateR(comm)
+```
 
-R Script: [`sads-test.R`](https://gist.github.com/darrenjw/b946d9e0d871d03411af) - **TODO: update to a demo script in this directory** 
+For our full sample, the estimators correctly deduce that the vast majority of species are present in our sample. For our fractional sample, the estimators detect that there are a significant number of unobserved species. However, they substatially understimate the true species richness of the parent population. The Chao estimator is well-known to underestimate true species diversity, but it serves as a useful lower bound. 
 
 
 
