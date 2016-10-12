@@ -210,7 +210,7 @@ estimateR(comm)
 
 For our full sample, the estimators correctly deduce that the vast majority of species are present in our sample. For our fractional sample, the estimators detect that there are a significant number of unobserved species. However, they substatially understimate the true species richness of the parent population. The Chao estimator is well-known to underestimate true species diversity, but it serves as a useful lower bound. 
 
-
+Note that the `vegan` package is a large package with a great deal of useful functionality. It is well-documented, with several vignettes, so these form a good starting point for further study.
 
 
 #### (C) 2016 Darren J Wilkinson
