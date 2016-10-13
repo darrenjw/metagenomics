@@ -8,7 +8,8 @@ The study on the EBI Metagenomics Portal with project ID `SRP066323` has two sam
 4. How many individuals were observed in the two samples?
 5. Find estimates for the total number of species in the communities corresponding to the two samples.
 6. Fit a selection of SAD models to the two samples. Which distribution fits best? `lnorm`? `poilog`? Something else? Is the same distribution best for both samples?
-7. Summarise your conclusions regarding the biodiversity exhibited in the two samples
+7. Is it plausible that the two samples are independent samples from the same metacommunity?
+8. Summarise your conclusions regarding the biodiversity exhibited in the two samples
 
 
 
