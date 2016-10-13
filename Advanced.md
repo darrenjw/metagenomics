@@ -46,6 +46,8 @@ Eventually hope to include in EBI Metagenomics analysis pipeline...
 
 #### Demo
 
+* Repo at: https://bitbucket.org/ncl_metagenomics/emp-dev-scala
+
 **TODO**
 
 
