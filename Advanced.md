@@ -19,7 +19,7 @@
 
 ### Existing MCMC software
 
-[BDES](http://userweb.eng.gla.ac.uk/christopher.quince/Software/BDES.html) --- Bayesian Diversity Estimation Software (Google search: `Quince BDES`) --- proof-of-concept software associated with:
+[BDES](http://userweb.eng.gla.ac.uk/christopher.quince/Software/BDES.html) --- Bayesian Diversity Estimation Software (Google search: `Quince BDES`) --- proof-of-concept academic software associated with the paper:
 
 Quince, Curtis, Sloan (2008) [The rational exploration of microbial diversity](http://www.nature.com/ismej/journal/v2/n10/full/ismej200869a.html), *ISME*, **2**, 997--1006.
 
@@ -33,14 +33,14 @@ Quince, Curtis, Sloan (2008) [The rational exploration of microbial diversity](h
 ### Software under development
 
 * Using the same basic ideas and algorithms from BDES, but re-written from scratch in Scala to run on the JVM
-* One algorithm to analyse all models simultaneously
+* One program to analyse all models (simultaneously)
 * Proper model comparison
 * Robust analysis for large samples
 * Well documented
-* User-friendly interface (GUI and/or wrapper R package)
+* User-friendly interface (GUI and **wrapper R package**)
 * Distributed as both easy-to-build source and ready-to-run ``assembly jar"
 
-Currently in development --- experimental release for demo purposes...
+Currently in development --- experimental (command-line) release for demo purposes...
 
 Eventually hope to include in EBI Metagenomics analysis pipeline...
 
@@ -56,8 +56,9 @@ Eventually hope to include in EBI Metagenomics analysis pipeline...
 * Tools from population ecology are useful for understanding the biodiversity represented by metagenomic samples
 * The R statistical language has many packages which make it easy to do a range of exploratory data analysis tasks associated with species abundance data
 * Bayesian hierarchical modelling properly models and propagates the uncertainties inherent in the analysis of sample species abundance data
-* Software for Bayesian modelling of species diversity exists now, but more complete and robust software is under development
+* Software for Bayesian modelling of species diversity exists now, but more complete and robust software is under development...
 
+## Acknowledgements
 
 This is joint work with [Tom Curtis](http://www.ncl.ac.uk/ceg/role/profile/tomcurtis.html) and Peter Sutovsky, funded jointly with the EBI by the BBSRC BBR grant: [EBI Metagenomics Portal](http://www.bbsrc.ac.uk/research/grants-search/AwardDetails/?FundingReference=BB/M011453/1) led by [Rob Finn](http://www.ebi.ac.uk/about/people/rob-finn) at the [EBI](http://www.ebi.ac.uk/).
 
