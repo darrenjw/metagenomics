@@ -1,5 +1,17 @@
 # Exercise on taxa abundance data retrieval and analysis
 
+* The study on the EBI Metagenomics Portal with project ID `SRP066323` has two samples (but many runs per sample)
+* The data arises from metagenomic sampling of two human fecal samples
+
+1. Download (and merge) the OTU data for the two samples (separately)
+2. Produce plots of the species abundance patterns in each sample
+3. How many species were observed in the two samples?
+4. How many individuals were observed in the two samples?
+5. Find estimates for the total number of species in the communities corresponding to the two samples.
+6. Fit a selection of SAD models to the two samples. Which distribution fits best? `lnorm`? `poilog`? Something else? Is the same distribution best for both samples?
+7. Summarise your conclusions regarding the biodiversity exhibited in the two samples
+
+
 
 #### (C) 2016 Darren J Wilkinson
 
