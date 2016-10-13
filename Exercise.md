@@ -1,7 +1,6 @@
 # Exercise on taxa abundance data retrieval and analysis
 
-* The study on the EBI Metagenomics Portal with project ID `SRP066323` has two samples (but many runs per sample)
-* The data arises from metagenomic sampling of two human fecal samples
+The study on the EBI Metagenomics Portal with project ID `SRP066323` has two samples (but many runs per sample). The data arises from metagenomic sampling of two human fecal samples. Your task is to investigate biodiversity in the two samples, follwing the guidelines below.
 
 1. Download (and merge) the OTU data for the two samples (separately)
 2. Produce plots of the species abundance patterns in each sample
