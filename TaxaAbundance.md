@@ -217,6 +217,7 @@ Note finally that there are other available methods for species richness estimat
 
 ```r
 library(breakaway)
+breakaway(abund2sad(commFull))
 breakaway(abund2sad(comm))
 ```
 
