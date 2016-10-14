@@ -24,11 +24,12 @@ As there are so many R packages on CRAN it can be a challenge to find the right 
 
 * [sads](https://cran.r-project.org/web/packages/sads/) - simulation of and MLE estimation for species abundance distributions (SADs), including *Poisson-log-normal*
 * [vegan](https://cran.r-project.org/web/packages/vegan/) - large package for community ecology - fitting species abundance distributions (SADs), estimating number of unobserved species, etc.
+* [breakaway](https://cran.r-project.org/web/packages/breakaway/) - package for diversity estimation
 * [untb](https://cran.r-project.org/web/packages/untb/) - unified neutral theory of biodiversity (UNTB) - simulation of ecological drift and estimation of biodiversity parameters
 * [BAT](https://cran.r-project.org/web/packages/BAT/) - biodiversity assessment tools (BAT)
 * [BiodiversityR](https://cran.r-project.org/web/packages/BiodiversityR/) - mainly a GUI interface for `vegan`
 
-In this session we will use `sads` and `vegan`. Assuming that R is installed and running, these can be loaded with:
+In this session we will mainly use `sads` and `vegan`. Assuming that R is installed and running, these can be loaded with:
 
 ```r
 library(sads)
@@ -211,6 +212,15 @@ estimateR(comm)
 For our full sample, the estimators correctly deduce that the vast majority of species are present in our sample. For our fractional sample, the estimators detect that there are a significant number of unobserved species. However, they substatially understimate the true species richness of the parent population. The Chao estimator is well-known to underestimate true species diversity, but it serves as a useful lower bound. 
 
 Note that the `vegan` package is a large package with a great deal of useful functionality. It is well-documented, with several vignettes, so these form a good starting point for further study.
+
+Note finally that there are other available methods for species richness estimation, and some of these are implemented in other R packages on CRAN. For example, the package `breakaway` implements some methods recently proposed in the literature. If this package is installed (`install.packages("breakaway")`), we can use it as follows.
+
+```r
+library(breakaway)
+breakaway(abund2sad(comm))
+```
+
+Note that this package requires abundance data in the SAD form, as given by the output of the function `abund2sad()`. In this case the estimate is worse than that of the Chao estimator, but this won't always be so. Species abundance estimation is a non-trivial problem, and we will consider it further later.
 
 
 #### (C) 2016 Darren J Wilkinson
