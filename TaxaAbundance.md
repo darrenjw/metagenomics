@@ -213,7 +213,7 @@ For our full sample, the estimators correctly deduce that the vast majority of s
 
 Note that the `vegan` package is a large package with a great deal of useful functionality. It is well-documented, with several vignettes, so these form a good starting point for further study.
 
-Note finally that there are other available methods for species richness estimation, and some of these are implemented in other R packages on CRAN. For example, the package `breakaway` implements some methods recently proposed in the literature. If this package is installed (`install.packages("breakaway")`), we can use it as follows.
+Note finally that there are other available methods for species richness estimation, and some of these are implemented in other R packages on CRAN. For example, the package `breakaway` implements some methods recently proposed in the literature. If this package is installed (if not, `install.packages("breakaway")`), we can use it as follows.
 
 ```r
 library(breakaway)
@@ -221,7 +221,7 @@ breakaway(abund2sad(commFull))
 breakaway(abund2sad(comm))
 ```
 
-Note that this package requires abundance data in the SAD form, as given by the output of the function `abund2sad()`. In this case the estimate is worse than that of the Chao estimator, but this won't always be so. Species abundance estimation is a non-trivial problem, and we will consider it further later.
+Note that this package requires abundance data in the SAD form, as given by the output of the function `abund2sad()`. Further details are given in the package documentation. In this case the estimate is worse than that of the Chao estimator, but this won't always be so. Species abundance estimation is a non-trivial problem, and we will consider it further later.
 
 
 #### (C) 2016 Darren J Wilkinson
