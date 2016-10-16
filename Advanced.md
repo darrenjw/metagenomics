@@ -36,9 +36,9 @@ Quince, Curtis, Sloan (2008) [The rational exploration of microbial diversity](h
 * One program to analyse all models (simultaneously)
 * Proper model comparison
 * Robust analysis for large samples
-* Well documented
-* User-friendly interface (GUI and **wrapper R package**)
-* Distributed as both easy-to-build source and ready-to-run ``assembly jar"
+* Well documented, and hosted in a public Git repo
+* User-friendly interface (GUI and **wrapper R package**, in addition to command-line)
+* Distributed as both easy-to-build source and ready-to-run platform-independent ``assembly jar"
 
 Currently in development --- experimental (command-line) release for demo purposes...
 
