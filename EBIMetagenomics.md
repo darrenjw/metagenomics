@@ -79,7 +79,7 @@ A list of studies containing at least 100 samples can be obtained with:
 pl$Study.ID[pl$Number.Of.Samples >= 100]
 ```
 
-A list of studies with name containing particluar text can be obtained with commands like:
+A list of studies with name containing particular text can be obtained with commands like:
 
 ```r
 pl$Study.ID[grep("16S",pl$Project.Name)]
@@ -160,7 +160,7 @@ dim(run)
 
 The data frame contains three variables: `OTU`, corresponding to the OTU ID, `Count`, representing the number of times the OTU was encountered in the run, and `Tax`, a string containing a taxonomic classification associated with the OTU. 
 
-Note that the function `getRunOtu` contains two optional boolean arguments, `verb` and `plot.preston`, both of which default to `FALSE`. The former simply echos the run ID to the console, and the latter displays a [Preston plot](https://en.wikipedia.org/wiki/Relative_species_abundance) for the OTU data. This can be useful to get a quick visual understanding of the nature of the run. After downloading, a plot can be constructed manually with:
+Note that the function `getRunOtu` contains two optional Boolean arguments, `verb` and `plot.preston`, both of which default to `FALSE`. The former simply echos the run ID to the console, and the latter displays a [Preston plot](https://en.wikipedia.org/wiki/Relative_species_abundance) for the OTU data. This can be useful to get a quick visual understanding of the nature of the run. After downloading, a plot can be constructed manually with:
 
 ```r
 plot(octav(run$Count),main="Preston plot")
@@ -176,7 +176,7 @@ plot(octav(runMerged$Count),main="Preston plot for merged runs")
 
 More than two OTU data frames can be merged in this way. See the `?mergeOtu` example for how to merge a list of OTU data frames. It is often desirable to download all of the runs associated with a particular sample and to merge the run OTU data frames together to give an overall OTU data frame for the sample. The function `getSampleOtu` automates this process.
 
-It can be run in its simplest form as `run=getSampleOtu(ps,"SRS711891")` but it too has optional boolean arguments `verb` and `plot.preston`. Here `verb` defaults to `TRUE`, since it is usually useful to have a progress update, and the `plot.preston` argument is often worth using to "see" the data as it is being downloaded.
+It can be run in its simplest form as `run=getSampleOtu(ps,"SRS711891")` but it too has optional Boolean arguments `verb` and `plot.preston`. Here `verb` defaults to `TRUE`, since it is usually useful to have a progress update, and the `plot.preston` argument is often worth using to "see" the data as it is being downloaded.
 
 ```r
 run=getSampleOtu(ps,"SRS711891",plot.preston=TRUE)
@@ -186,7 +186,7 @@ dim(run)
 
 The taxa abundance count data now downloaded into the R session can be utilised in the same way as any other species abundance data in R.
 
-Note that the package includes the function `convertOtuTad()` which re-tabulates OTU counts as a taxa abundance distribtion (TAD), and `plotOtu()`, which does a selection of 4 plots for a given set of OTU counts.
+Note that the package includes the function `convertOtuTad()` which re-tabulates OTU counts as a taxa abundance distribution (TAD), and `plotOtu()`, which does a selection of 4 plots for a given set of OTU counts.
 
 ```r
 head(convertOtuTad(run))

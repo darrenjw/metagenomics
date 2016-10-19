@@ -12,7 +12,7 @@
 * It is free, open source and cross-platform
 * There are good free IDEs, such as [RStudio](https://www.rstudio.com/)
 * There are thousands for packages for R, managed in a mirrored repository, known as [CRAN](cran.r-project.org), the comprehensive R archive network
-* [Bioconductor](https://bioconductor.org/) is another R repository focussing specifically on high-throughput genomic data, containing over one thousand packages
+* [Bioconductor](https://bioconductor.org/) is another R repository focusing specifically on high-throughput genomic data, containing over one thousand packages
 
 It is possible to analyse raw sequencing data using Bioconductor packages such as [ShortRead](https://bioconductor.org/packages/release/bioc/html/ShortRead.html), but that is a different subject...
 
@@ -209,7 +209,7 @@ estimateR(commFull)
 estimateR(comm)
 ```
 
-For our full sample, the estimators correctly deduce that the vast majority of species are present in our sample. For our fractional sample, the estimators detect that there are a significant number of unobserved species. However, they substatially understimate the true species richness of the parent population. The Chao estimator is well-known to underestimate true species diversity, but it serves as a useful lower bound. 
+For our full sample, the estimators correctly deduce that the vast majority of species are present in our sample. For our fractional sample, the estimators detect that there are a significant number of unobserved species. However, they substantially underestimate the true species richness of the parent population. The Chao estimator is well-known to underestimate true species diversity, but it serves as a useful lower bound. 
 
 Note that the `vegan` package is a large package with a great deal of useful functionality. It is well-documented, with several vignettes, so these form a good starting point for further study.
 
