@@ -104,7 +104,8 @@ The other output file of interest is the "sample size" output, corresponding to 
 ```r
 ssout = read.csv("sample_size_foo-bar.csv") # use correct filename!
 head(ssout)
-
+mcmcSummary(ssout[,c(1,2,3,5,6)])
+mcmcSummary(ssout[-(1:5),c(1,2,3,5)])
 ```
 
 ## Summary
