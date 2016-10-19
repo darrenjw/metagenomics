@@ -60,6 +60,13 @@ Note that the hash may be different for you, so adapt appropriately.
 ./sbt fat:assembly
 ```
 or `.\sbt fat:assembly` on Windows. Note that the first time you run sbt it will take a long time and download a lot of stuff - it's possibly not a great idea to do this in the middle of a training session with lots of people...
+* The result of the compilation should be a file called `emp_dev_scala-assembly-1.0-fat.jar` in `target/scala-2.11/`
+* As an alternative to building, I have a recent version of the assembly available for download. If you are on Linux or a unix-alike, you can probably download it into the current directory with a command like
+```bash
+wget http://www.mas.ncl.ac.uk/~ndjw1/files/emp_dev_scala-assembly-1.0-fat.jar
+```
+If you are on Windows, you may just need to use this [download link]( http://www.mas.ncl.ac.uk/~ndjw1/files/emp_dev_scala-assembly-1.0-fat.jar), and then move the file somewhere appropriate.
+
 
 
 ## Summary
