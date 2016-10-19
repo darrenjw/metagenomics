@@ -48,27 +48,35 @@ Eventually hope to include in EBI Metagenomics analysis pipeline...
 
 #### Getting started
 
-* Repo at: https://bitbucket.org/ncl_metagenomics/emp-dev-scala - open this up in another tab, and have a quick skim through the readme
-* Pop up a command shell of some kind (not an R session) ready to work with this software, and `cd` into an appropriate directory
-* If you are a git person, you can clone this repo in the usual way. eg. `git clone git@bitbucket.org:ncl_metagenomics/emp-dev-scala.git` if you have certs on [bitbucket](https://bitbucket.org/), or using https if you don't.
-* For non-git users, just go to the [downloads page](https://bitbucket.org/ncl_metagenomics/emp-dev-scala/downloads) and download the latest version of repository, and move the zip file to your directory and unpack with something like:
+Git repo at: https://bitbucket.org/ncl_metagenomics/emp-dev-scala - open this up in another tab, and have a quick skim through the readme.
+
+Pop up a command shell of some kind (not an R session) ready to work with this software, and `cd` into an appropriate directory.
+
+If you are a git person, you can clone this repo in the usual way. eg. `git clone git@bitbucket.org:ncl_metagenomics/emp-dev-scala.git` if you have certs on [bitbucket](https://bitbucket.org/), or using https if you don't.
+
+For non-git users, just go to the [downloads page](https://bitbucket.org/ncl_metagenomics/emp-dev-scala/downloads) and download the latest version of repository, and move the zip file to your directory and unpack with something like:
+
 ```bash
 unzip ncl_metagenomics-emp-dev-scala-83bdd3d8d8fe.zip
 cd ncl_metagenomics-emp-dev-scala-83bdd3d8d8fe
 ```
 Note that the hash may be different for you, so adapt appropriately.
-* This is a [scala](http://www.scala-lang.org/) project, built using [sbt](http://www.scala-sbt.org/). Like all scala sbt projects, it should be completely trivial to build, test and run from source on any system with a recent version of Java installed. So if `java -version` returns something sensible - eg. a version number beginning 1.8, then you should be able to build this project with
+
+This is a [scala](http://www.scala-lang.org/) project, built using [sbt](http://www.scala-sbt.org/). Like all scala sbt projects, it should be completely trivial to build, test and run from source on any system with a recent version of Java installed. So if `java -version` returns something sensible - eg. a version number beginning 1.8, then you should be able to build this project with
 ```bash
 ./sbt fat:assembly
 ```
 or `.\sbt fat:assembly` on Windows. Note that the first time you run sbt it will take a long time and download a lot of stuff - it's possibly not a great idea to do this in the middle of a training session with lots of people...
-* The result of the compilation should be a file called `emp_dev_scala-assembly-1.0-fat.jar` in `target/scala-2.11/`
-* As an alternative to building, I have a recent version of the assembly available for download. If you are on Linux or a Unix-alike, you can probably download it into the current directory with a command like
+
+The result of the compilation should be a file called `emp_dev_scala-assembly-1.0-fat.jar` in `target/scala-2.11/`
+
+As an alternative to building, I have a recent version of the assembly available for download. If you are on Linux or a Unix-alike, you can probably download it into the current directory with a command like
 ```bash
 wget http://www.mas.ncl.ac.uk/~ndjw1/files/emp_dev_scala-assembly-1.0-fat.jar
 ```
 If you are on Windows, you may just need to use this [download link](http://www.mas.ncl.ac.uk/~ndjw1/files/emp_dev_scala-assembly-1.0-fat.jar), and then move the file somewhere appropriate. The assembly is all that is required to run the Bayesian analysis.
-* Assuming that the assembly is in its default location, you can run a short test of the software with:
+
+Assuming that the assembly is in its default location, you can run a short test of the software with:
 ```bash
 java -cp target/scala-2.11/emp_dev_scala-assembly-1.0-fat.jar ExperimentScalaRunner --in "data/DemoData/Brazil.sample" -s 100 -c 0.8
 ```
@@ -76,37 +84,45 @@ just to make sure everything seems to work. This will create some (very small) o
 
 #### Analysis of taxa abundance data
 
-* The software takes taxa abundance data as input. This can either be in the form of a `.sample` file, as used by the BDES software, or in the form of a more conventional `.csv` file (containing SAD/TAD data), which we can easily generate from R. The MCMC output files will need to be post-processed using R (or similar) for interpretation.
-* Back in R, make sure you have some OTU data from the EMG portal in an object called `otu`. Then, at the R command prompt, use a command like
+The software takes taxa abundance data as input. This can either be in the form of a `.sample` file, as used by the BDES software, or in the form of a more conventional `.csv` file (containing SAD/TAD data), which we can easily generate from R. The MCMC output files will need to be post-processed using R (or similar) for interpretation.
+
+Back in R, make sure you have some OTU data from the EMG portal in an object called `otu`. Then, at the R command prompt, use a command like
 ```r
 write.csv(convertOtuTad(otu),"emg-otu-tad.csv",row.names=FALSE)
 ```
 to write out the data in a form readable by the software. Note that it is vital to convert the data to TAD format before writing, and to omit row names from the file output.
-* Move the CSV file to the `data/` directory of the software, and then try analysing it with
+
+Move the CSV file to the `data/` directory of the software, and then try analysing it with
 ```r
 java -cp target/scala-2.11/emp_dev_scala-assembly-1.0-fat.jar ExperimentScalaRunner --in "data/emg-otu-tad.csv" -s 100 -c 0.9
 ```
 The `-s` argument represents the required number of MCMC iterations. For a "real" analysis, it is likely that you will want this to be `100000`, but this will take a long time - do a preliminary run with `1000` iterations and then multiply up to get a feeling for how long it will take. Above I'm suggesting 100, which is completely useless for any kind of subsequent analysis or interpretation, but should be quick enough to complete in the context of training session. The running time depends on the size of the data, and is a bit unpredictable. The `-c` argument is for the second part of the analysis, which is the desired coverage. eg. specifying a value of 0.9 will cause the software to estimate the sample size required to observe 90% of the true species diversity. Other options are available, such as `-t` to change the thinning interval from the default of 10 (which means store 1 in every 10 MCMC iterations in the output file).
-* Output files will be generated in the same directory as the TAD CSV file. The first file of interest will be the one generated by the main MCMC run, which will be of the form `posterior-*.csv`, where `*` will include the name of the input file and a date stamp. This can be read into R with a command like:
+
+Output files will be generated in the same directory as the TAD CSV file. The first file of interest will be the one generated by the main MCMC run, which will be of the form `posterior-*.csv`, where `*` will include the name of the input file and a date stamp. This can be read into R with a command like:
 ```r
 out = read.csv("posterior-foo-bar.csv") # use correct filename!
 ```
 where the filename exactly matches that generated by the code. Proper analysis and interpretation of MCMC output is a skilled task in itself. For detailed analysis, you will probably want to use a CRAN package such as [coda](https://cran.r-project.org/package=coda). For a quick look, you could also use the function `mcmcSummary` in my CRAN package [smfsb](https://cran.r-project.org/package=smfsb). This is especially useful for visualising the data to decide how much burn-in to remove and then getting some point estimates and probability intervals for parameters.
+
 ```r
 library(smfsb)
 head(out)
 mcmcSummary(out[,2:6]) # omit unwanted columns
 mcmcSummary(out[-(1:5),2:6]) # chop off first 5 samples
 ```
-For real runs, it is quite common to remove 100 or 1000 samples as "burn-in". 
+
+For real runs, it is quite common to remove 100 or 1000 samples as "burn-in". `S` is the variable representing (estimated) true species diversity.
 
 The other output file of interest is the "sample size" output, corresponding to the fractional coverage requested at run-time, and this will be of the form `sample_size*.csv`, where `*` will contain additional information about the run. This can be read into R and analysed similarly.
+
 ```r
 ssout = read.csv("sample_size_foo-bar.csv") # use correct filename!
 head(ssout)
 mcmcSummary(ssout[,c(1,2,3,5,6)])
 mcmcSummary(ssout[-(1:5),c(1,2,3,5)])
 ```
+
+The `nL` variable is correpsonds to the sample size recommended to obtain adequate diversity coverage.
 
 ## Summary
 
