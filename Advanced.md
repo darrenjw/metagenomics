@@ -46,9 +46,20 @@ Eventually hope to include in EBI Metagenomics analysis pipeline...
 
 #### Demo
 
-* Repo at: https://bitbucket.org/ncl_metagenomics/emp-dev-scala
-
-**TODO**
+* Repo at: https://bitbucket.org/ncl_metagenomics/emp-dev-scala - open this up in another tab, and have a quick skim through the readme
+* Pop up a command shell of some kind (not an R session) ready to work with this software, and `cd` into an appropriate directory
+* If you are a git person, you can clone this repo in the usual way. eg. `git clone git@bitbucket.org:ncl_metagenomics/emp-dev-scala.git` if you have certs on [bitbucket](https://bitbucket.org/), or using https if you don't.
+* For non-git users, just go to the [downloads page](https://bitbucket.org/ncl_metagenomics/emp-dev-scala/downloads) and download the latest version of repository, and move the zip file to your directory and unpack with something like:
+```bash
+unzip ncl_metagenomics-emp-dev-scala-83bdd3d8d8fe.zip
+cd ncl_metagenomics-emp-dev-scala-83bdd3d8d8fe
+```
+Note that the hash may be different for you, so adapt appropriately.
+* This is a [scala](http://www.scala-lang.org/) project, built using [sbt](http://www.scala-sbt.org/). Like all scala sbt projects, it should be completely trivial to build, test and run from source on any system with a recent version of Java installed. So if `java -version` returns something sensible - eg. a version number beginning 1.8, then you should be able to build this project with
+```bash
+./sbt fat:assembly
+```
+or `.\sbt fat:assembly` on Windows. Note that the first time you run sbt it will take a long time and download a lot of stuff - it's possibly not a great idea to do this in the middle of a training session with lots of people...
 
 
 ## Summary
