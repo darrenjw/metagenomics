@@ -65,9 +65,23 @@ or `.\sbt fat:assembly` on Windows. Note that the first time you run sbt it will
 ```bash
 wget http://www.mas.ncl.ac.uk/~ndjw1/files/emp_dev_scala-assembly-1.0-fat.jar
 ```
-If you are on Windows, you may just need to use this [download link]( http://www.mas.ncl.ac.uk/~ndjw1/files/emp_dev_scala-assembly-1.0-fat.jar), and then move the file somewhere appropriate.
-
-
+If you are on Windows, you may just need to use this [download link](http://www.mas.ncl.ac.uk/~ndjw1/files/emp_dev_scala-assembly-1.0-fat.jar), and then move the file somewhere appropriate. The assembly is all that is required to run the Bayesian analysis.
+* Assuming that the assembly is in its default location, you can run a short test of the software with:
+```bash
+java -cp target/scala-2.11/emp_dev_scala-assembly-1.0-fat.jar ExperimentScalaRunner --in "data/DemoData/Brazil.sample" -s 100 -c 0.8
+```
+just to make sure everything seems to work. This will create some (very small) output files in `data/DemoData/`.
+* The software takes taxa abundance data as input. This can either be in the form of a `.sample` file, as used by the BDES software, or in the form of a more conventional `.csv` file (containing SAD/TAD data), which we can easily generate from R. The MCMC output files will need to be post-processed using R (or similar) for interpretation.
+* Back in R, make sure you have some OTU data from the EMG portal in an object called `otu`. Then, at the R command prompt, use a command like
+```r
+write.csv(convertOtuTad(otu),"emg-otu-tad.csv",row.names=FALSE)
+```
+to write out the data in a form readable by the software. Note that it is vital to convert the data to TAD format before writing, and to omit row names from the file output.
+* Move the CSV file to the `data/` directory of the software, and then try analysing it with
+```r
+java -cp target/scala-2.11/emp_dev_scala-assembly-1.0-fat.jar ExperimentScalaRunner --in "/tmp/test.csv" -s 100 -c 0.9
+```
+The `-s` argument represents the required number of MCMC iterations. For a "real" analysis, it is likely that you will want this to be `100000`, but this will take a long time - do a preliminary run with `1000` iterations and then multiply up to get a feeling for how long it will take. Above I'm suggesting 100, which is completely useless for any kind of subsequent analysis or interpretation, but should be quick enough to complete in the context of training session. The running time depends on the size of the data. The `-c` argument is for the second part of the analysis, which is the desired coverage. eg. specifying a value of 0.9 will cause the software to estimate the sample size required to observe 90% of the true species diversity. Other options are available, such as `-t` to change the thinning interval from the default of 10 (which means store 1 in every 10 MCMC iterations in the output file).
 
 ## Summary
 
