@@ -124,6 +124,15 @@ mcmcSummary(ssout[-(1:5),c(1,2,3,5)])
 
 The `nL` variable is correpsonds to the sample size recommended to obtain adequate diversity coverage.
 
+If time permits, there is a sample of output from a longer run that you can download and analyse. On Linux and similar, you can download it with:
+
+```bash
+wget http://www.mas.ncl.ac.uk/~ndjw1/files/emp-dev-out.zip
+```
+
+and on Windows you can use this [download link](http://www.mas.ncl.ac.uk/~ndjw1/files/emp-dev-out.zip). Download, unzip and load up into R for analysis. The output corresponds to the example `Brazil.sample` that is distributed with the software.
+
+
 ## Summary
 
 * Tools from population ecology are useful for understanding the biodiversity represented by metagenomic samples
