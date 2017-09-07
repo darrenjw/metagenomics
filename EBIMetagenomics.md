@@ -61,7 +61,7 @@ str(pl)
 dim(pl)
 ```
 
-At the time of writing there are over 700 projects, and important fields include `Study.ID` (which corresponds to the `projectID` required for the function `getProjectSummary()` in this package), `Project.Name` and `Number.Of.Samples`. These can be used to find the ID of a study of interest. For example, a list of *all* project IDs can be obtained with
+At the time of writing there are over 700 projects, and important fields include `Study.ID` (which corresponds to the `projectID` required for the function `getProjectSummary()` in this package), `Study.Name` and `Number.Of.Samples`. These can be used to find the ID of a study of interest. For example, a list of *all* project IDs can be obtained with
 
 ```r
 pl$Study.ID
@@ -82,10 +82,10 @@ pl$Study.ID[pl$Number.Of.Samples >= 100]
 A list of studies with name containing particular text can be obtained with commands like:
 
 ```r
-pl$Study.ID[grep("16S",pl$Project.Name)]
-pl$Study.ID[grep("sludge",pl$Project.Name)]
-pl$Study.ID[grep("Tara",pl$Project.Name)]
-pl$Study.ID[agrep("human gut",pl$Project.Name)]
+pl$Study.ID[grep("16S",pl$Study.Name)]
+pl$Study.ID[grep("sludge",pl$Study.Name)]
+pl$Study.ID[grep("Tara",pl$Study.Name)]
+pl$Study.ID[agrep("human gut",pl$Study.Name)]
 ```
 
 The information relating to one particular study can be extracted with, eg.
