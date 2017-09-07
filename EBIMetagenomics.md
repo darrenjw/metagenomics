@@ -18,7 +18,7 @@ However, this package is currently undergoing rapid development, so it is probab
 install.packages("ebimetagenomics", repos="http://R-Forge.R-project.org")
 ```
 
-and update it regularly. Note that if you are installing from R-Forge, you need to make sure that the CRAN [sads](https://cran.r-project.org/web/packages/sads/) package is already installed (if you installing from CRAN, dependencies should be automatically pulled in).
+and update it regularly. Note that if you are installing from R-Forge, you may need to manually install some dependencies from CRAN (if you installing from CRAN, dependencies should be automatically pulled in).
 
 Once installed, it can be loaded with:
 
@@ -193,7 +193,16 @@ head(convertOtuTad(run))
 plotOtu(run)
 ```
 
+Commonly required stats associated with OTU counts can be computed with the function `analyseOtu()`.
 
-#### (C) 2016 Darren J Wilkinson
+```r
+analyseOtu(run)
+```
+
+As well as computing various different estimates of the total number of taxa in the community that was sampled, it also computes estimates (assuming a Poission-log-normal TAD) of the number of sequences required in order to observe a given fraction of the total species present. This can be useful for estimating required sequencing effort. 
+
+
+
+#### (C) 2017 Darren J Wilkinson
 
 
