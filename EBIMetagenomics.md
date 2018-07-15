@@ -6,7 +6,7 @@ The EBI Metagenomics Portal (https://www.ebi.ac.uk/metagenomics/) is a rich sour
 
 It is perfectly possible to use the [web portal](https://www.ebi.ac.uk/metagenomics/) to search and browse for data of interest, then download required data in CSV or tab-delimited format. This can then be loaded into R from the local file system. Although this is possible, it quickly becomes slow, cumbersome and error-prone (though the [bulk download facility](https://github.com/ProteinsWebTeam/ebi-metagenomics/wiki/Downloading-results-programmatically) makes it much less so). For many purposes it is better to be able to query the data directly from an R session, and this enables automated data retrieval and analysis workflows.
 
-I have written a small R package called [ebimetagenomics](http://r-forge.r-project.org/projects/ebimetagenomics/) for this purpose. It should be possible to install this directly from [CRAN](https://cran.r-project.org/web/packages/ebimetagenomics/) via:
+I have written a small R package called [ebimetagenomics](http://r-forge.r-project.org/projects/ebimetagenomics/) for querying EBI Metagenomics data. It should be possible to install this directly from [CRAN](https://cran.r-project.org/web/packages/ebimetagenomics/) via:
 
 ```r
 install.packages("ebimetagenomics")
@@ -19,6 +19,8 @@ install.packages("ebimetagenomics", repos="http://R-Forge.R-project.org")
 ```
 
 and update it regularly. Note that if you are installing from R-Forge, you may need to manually install some dependencies from CRAN (if you installing from CRAN, dependencies should be automatically pulled in).
+
+Note that this package was written prior to the development of the new <a href="https://emg-docs.readthedocs.io/en/latest/index.html">MGnify web API</a>, and so isn't actually using the API yet. It will be updated to use the API in due course. Note that the web API makes it straightforward to write tools like this R package in any language.
 
 Once installed, it can be loaded with:
 
