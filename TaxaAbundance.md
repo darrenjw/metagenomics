@@ -221,7 +221,7 @@ breakaway(abund2sad(commFull))
 breakaway(abund2sad(comm))
 ```
 
-Note that this package requires abundance data in the SAD form, as given by the output of the function `abund2sad()`. Further details are given in the package documentation. In this case the estimate is worse than that of the Chao estimator, but this won't always be so. Diversity estimation is a non-trivial problem, and we will consider it further later.
+Note that this package requires abundance data in the SAD form, as given by the output of the function `abund2sad()`. Further details are given in the package documentation. In this case the estimate is worse than that of the Chao estimator, but this won't always be so. Diversity estimation is a non-trivial problem!
 
 
 #### (C) 2016 Darren J Wilkinson
