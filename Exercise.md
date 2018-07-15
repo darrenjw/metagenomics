@@ -1,6 +1,6 @@
 # Exercise on taxa abundance data retrieval and analysis
 
-The study on the EBI Metagenomics Portal with project ID `SRP108566` has four samples (but many runs per sample). The data arises from metagenomic sequencing of two human microbiome samples. Your task is to investigate biodiversity in the four samples, following the guidelines below. *Do not use a web browser!* Leave your web browser displaying only these instructions and see if you can accomplish this task completely using only R.
+The study on the EBI Metagenomics Portal with project ID `SRP108566` has four samples (but many runs per sample). The data arises from metagenomic sequencing of human microbiome samples. Your task is to investigate biodiversity in the four samples, following the guidelines below. *Do not use a web browser!* Leave your web browser displaying only these instructions and see if you can accomplish this task completely using only R.
 
 1. Download (and merge) the OTU data for the four samples (separately)
 2. Produce plots of the species abundance patterns in each sample
