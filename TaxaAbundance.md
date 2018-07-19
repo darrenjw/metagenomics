@@ -3,7 +3,7 @@
 * Using standard tools for processing sequencing data derived from metagenomic samples (such as the [QIIME](http://qiime.org/) pipeline), it is possible to summarise taxonomic diversity in terms of the taxa present in the samples together with counts representing relative species abundance
 * Although metagenomics is a relatively new field, ecologists have been studying species abundance and diversity for decades, if not centuries
 * Population ecology is a mature discipline, with a huge literature, which makes extensive use of statistical modelling for understanding the effects of sampling on observed data and inferences
-* In addition to theory, there are many software tools and libraries that have been produced by ecologist for working with species abundance data
+* In addition to theory, there are many software tools and libraries that have been produced by ecologists for working with species abundance data
 * The main purpose of this session is to make people aware of this connection between metagenomics and population ecology, and to give a *very* brief introduction to some of the useful software tools that are easily and freely available
 * Statistical concepts, models and algorithms from population ecology can be used to try to answer some important questions about the community from which the metagenomic sample was taken:
   * What was the true diversity of the population sampled, and what distributional form did the true taxa abundance distribution take?
