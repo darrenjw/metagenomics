@@ -201,10 +201,10 @@ Commonly required stats associated with OTU counts can be computed with the func
 analyseOtu(run)
 ```
 
-As well as computing various different estimates of the total number of taxa in the community that was sampled, it also computes estimates (assuming a Poission-log-normal TAD) of the number of sequences required in order to observe a given fraction of the total species present. This can be useful for estimating required sequencing effort. 
+As well as computing various different estimates of the total number of taxa in the community that was sampled, it also computes estimates (assuming a Poisson-log-normal TAD) of the number of sequences required in order to observe a given fraction of the total species present. This can be useful for estimating required sequencing effort. 
+Several of the fields should be familiar from the `vegan` function `estimateR`. The `breakaway` estimate has also been included. `S.vln` is Preston's veiled log-normal method and `S.pln` is an estimate from a Poisson-log-Normal SAD fit. Under the same assumption of an underlying Poisson-log-Normal species abundance distribution (and using the same fit), `N.75`, `N.90`, `N.95` and `N.99` are estimates of the `N.obs` required in order to obtain 75%, 90%, 95% and 99% species coverage in a future sample.
 
 
-
-#### (C) 2017 Darren J Wilkinson
+#### (C) 2016-18 Darren J Wilkinson
 
 

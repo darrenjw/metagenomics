@@ -1,10 +1,17 @@
 # Introduction to taxa abundance data in R
 
 * Using standard tools for processing sequencing data derived from metagenomic samples (such as the [QIIME](http://qiime.org/) pipeline), it is possible to summarise taxonomic diversity in terms of the taxa present in the samples together with counts representing relative species abundance
-* Statistical concepts, models and algorithms from population ecology can be used to try to answer some important questions about the community from which the sample was taken:
+* Although metagenomics is a relatively new field, ecologists have been studying species abundance and diversity for decades, if not centuries
+* Population ecology is a mature discipline, with a huge literature, which makes extensive use of statistical modelling for understanding the effects of sampling on observed data and inferences
+* In addition to theory, there are many software tools and libraries that have been produced by ecologist for working with species abundance data
+* The main purpose of this session is to make people aware of this connection between metagenomics and population ecology, and to give a *very* brief introduction to some of the useful software tools that are easily and freely available
+* Statistical concepts, models and algorithms from population ecology can be used to try to answer some important questions about the community from which the metagenomic sample was taken:
   * What was the true diversity of the population sampled, and what distributional form did the true taxa abundance distribution take?
-  * Is the distribution consistent with neutral theories of evolution?
   * How much more sequencing would be required in order to sample a given required fraction of the true diversity of the sampled population?
+  * Is the abundance distribution consistent with neutral theories of evolution?
+  * How can I compare species abundance in different metagenomic samples and identify interesting differences that are not simply random sampling effects?
+  * Can I test whether a covariate appears to have a significant effect on the abundance distributions observed in my samples?
+  * Are the abundance distributions that I observe in my different samples consistent with the notion of a parent "meta-community" from which the samples are derived?
 
 ## The R language for statistical computing
 
@@ -22,12 +29,14 @@ R is very popular with ecologists, and so there are many R packages in CRAN for 
 
 As there are so many R packages on CRAN it can be a challenge to find the right package for the problem at hand. [CRAN Task Views](https://cran.r-project.org/web/views/) provide an overview of a task or domain, giving a guide to available packages and their functionality. The task view for [Environmetrics](https://cran.r-project.org/web/views/Environmetrics.html) is useful for finding out about packages for ecological applications. A small sample of interesting packages are listed below.
 
-* [sads](https://cran.r-project.org/web/packages/sads/) - simulation of and MLE estimation for species abundance distributions (SADs), including *Poisson-log-normal*
 * [vegan](https://cran.r-project.org/web/packages/vegan/) - large package for community ecology - fitting species abundance distributions (SADs), estimating number of unobserved species, etc.
+* [sads](https://cran.r-project.org/web/packages/sads/) - simulation of and MLE estimation for species abundance distributions (SADs), including *Poisson-log-normal*
 * [breakaway](https://cran.r-project.org/web/packages/breakaway/) - package for diversity estimation
 * [untb](https://cran.r-project.org/web/packages/untb/) - unified neutral theory of biodiversity (UNTB) - simulation of ecological drift and estimation of biodiversity parameters
 * [BAT](https://cran.r-project.org/web/packages/BAT/) - biodiversity assessment tools (BAT)
 * [BiodiversityR](https://cran.r-project.org/web/packages/BiodiversityR/) - mainly a GUI interface for `vegan`
+
+There are a *huge* number of useful software tools relating to population ecology that are potentially valuable for the analysis of metagenomics data, and this can feel a little overwhelming. Everyone at this session is interested in different questions, so it is difficult to give completely generic advice regarding what to invest time and effort into learning. That said, **vegan** is a large, well-regarded and well-documented library that contains a significant number of functions which are likely to be very useful almost irrespective of the scientific questions you are interested in. So, if following this session you are interested in exploring some tools from population ecology but are unsure where to start, my recommendation would be to put some time and effort into working through the available documentation for `vegan`.
 
 In this session we will mainly use `sads` and `vegan`. Assuming that R is installed and running, these can be loaded with:
 
@@ -201,17 +210,28 @@ See the vignette for the package: `vignette("sads_intro",package="sads")` for a 
 
 ### Estimation of diversity
 
-Given the observed sample, and its observed species richness, it is natural to want to estimate the true biodiversity of the population that has been sampled. As previously discussed, this is a non-trivial statistical problem, but there are some well-known estimators implemented in the `vegan` package. We can load up `vegan` and compute some estimates as follows.
+Given the observed sample, and its observed species richness, it is natural to want to estimate the true biodiversity of the population that has been sampled. As previously discussed, this is a non-trivial statistical problem, but there are some well-known estimators implemented in the aforementioned `vegan` package.
 
+We can load up `vegan` and get a list of vignettes with:
 ```r
 library(vegan)
+vignette(package="vegan")
+```
+You will see that there are several useful vignettes giving a tutorial introduction to several different aspects of the package functionality. For the purposes of this session, the `diversity-vegan` vignette is of particular interest.
+```r
+vignette("diversity-vegan")
+```
+When you have time (after this session), it would be worth spending some time working through this document carefully.
+
+We can compute some estimates of species diversity from our sample as follows:
+```r
 estimateR(commFull)
 estimateR(comm)
 ```
 
-For our full sample, the estimators correctly deduce that the vast majority of species are present in our sample. For our fractional sample, the estimators detect that there are a significant number of unobserved species. However, they substantially underestimate the true species richness of the parent population. The Chao estimator is well-known to underestimate true species diversity, but it serves as a useful lower bound. 
+We get the Chao estimator and the adjusted Chao estimator (ACE), together with estimates of standard error. For our full sample, the estimators correctly deduce that the vast majority of species are present in our sample. For our fractional sample, the estimators detect that there are a significant number of unobserved species. However, they substantially underestimate the true species richness of the parent population. The Chao estimator is well-known to underestimate true species diversity, but it serves as a useful lower bound. 
 
-Note that the `vegan` package is a large package with a great deal of useful functionality. It is well-documented, with several vignettes, so these form a good starting point for further study.
+#### Breakaway
 
 Note finally that there are other available methods for species richness estimation, and some of these are implemented in other R packages on CRAN. For example, the package `breakaway` implements some methods recently proposed in the literature. If this package is installed (if not, `install.packages("breakaway")`), we can use it as follows.
 
@@ -224,7 +244,9 @@ breakaway(abund2sad(comm))
 Note that this package requires abundance data in the SAD form, as given by the output of the function `abund2sad()`. Further details are given in the package documentation. In this case the estimate is worse than that of the Chao estimator, but this won't always be so. Diversity estimation is a non-trivial problem!
 
 
-#### (C) 2016 Darren J Wilkinson
+
+
+#### (C) 2016-18 Darren J Wilkinson
 
 
 

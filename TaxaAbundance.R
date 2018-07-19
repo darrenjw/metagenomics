@@ -100,6 +100,12 @@ par(op)
 
 
 library(vegan)
+vignette(package="vegan")
+
+
+vignette("diversity-vegan")
+
+
 estimateR(commFull)
 estimateR(comm)
 
