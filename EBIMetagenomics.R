@@ -92,3 +92,13 @@ plotOtu(run)
 
 analyseOtu(run)
 
+
+models = lapply(c("lnorm","poilog","ls","mzsm"), function(m){fitsad(run$Count,m)})
+models
+lapply(models, function(x){x@min})
+
+
+op=par(mfrow=c(2,2))
+plot(models[[1]])
+par(op)
+
