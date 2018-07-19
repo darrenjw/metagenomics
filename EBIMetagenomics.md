@@ -212,7 +212,13 @@ models = lapply(c("lnorm","poilog","ls","mzsm"), function(m){fitsad(run$Count,m)
 models
 lapply(models, function(x){x@min})
 ```
-Note that `poilog` has (by far) the largest fitted log-likelihood (or equivalently, smallest negative log-likelihood), suggesting a better fit to the data. This isn't a formal test of model adequacy, but suggests that this model is at least better than other commonly used alternatives.
+Note that `poilog` has (by far) the largest fitted log-likelihood (or equivalently, smallest negative log-likelihood), suggesting a better fit to the data. This isn't a formal test of model adequacy, but suggests that this model is at least better than other commonly used alternatives. This is confirmed by looking at diagnostic plots. For example,
+```r
+op=par(mfrow=c(2,2))
+plot(models[[1]])
+par(op)
+```
+shows a poor fit for "lnorm". Repeating for `[[3]]` and `[[4]]` shows even worse fits for "ls" and "mzsm". Repeating for `[[2]]` shows a very good fit, if the plot function doesn't crash, which it sometimes does. This illustrates an important issue: although population ecologists have been thinking about species abundance for decades, they haven't always been thinking about the sample sizes and diversity associated with some metagenomic samples, and so some of the available tools sometimes struggle to scale up to metagenomic data sets.
 
 
 
