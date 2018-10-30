@@ -63,10 +63,10 @@ str(pl)
 dim(pl)
 ```
 
-At the time of writing there are over 700 projects, and important fields include `Study.ID` (which corresponds to the `projectID` required for the function `getProjectSummary()` in this package), `Study.Name` and `Number.Of.Samples`. These can be used to find the ID of a study of interest. For example, a list of *all* project IDs can be obtained with
+At the time of writing there are over 700 projects, and important fields include `accession` (which corresponds to the `accession` required for the function `getProjectSummary()` in this package), `study_name` and `samples_count`. These can be used to find the ID of a study of interest. For example, a list of *all* project IDs can be obtained with
 
 ```r
-pl$Study.ID
+pl$accession
 ```
 
 or
@@ -78,22 +78,23 @@ rownames(pl)
 A list of studies containing at least 100 samples can be obtained with:
 
 ```r
-pl$Study.ID[pl$Number.Of.Samples >= 100]
+pl$accession[pl$samples_count >= 100]
 ```
 
 A list of studies with name containing particular text can be obtained with commands like:
 
 ```r
-pl$Study.ID[grep("16S",pl$Study.Name)]
-pl$Study.ID[grep("sludge",pl$Study.Name)]
-pl$Study.ID[grep("Tara",pl$Study.Name)]
-pl$Study.ID[agrep("human gut",pl$Study.Name)]
+pl$accession[grep("16S",pl$study_name)]
+pl$accession[grep("sludge",pl$study_name)]
+pl$accession[grep("Tara",pl$study_name)]
+pl$accession[agrep("human gut",pl$study_name)]
 ```
 
 The information relating to one particular study can be extracted with, eg.
 
 ```r
-pl["ERP001736",]
+pl$accession[pl$secondary_accession=="ERP001736"]
+pl["MGYS00000410",]
 ```
 
 ### Working with a project summary
@@ -111,10 +112,10 @@ str(ps)
 dim(ps)
 ```
 
-Important fields include `Sample.ID` and `Run.ID`. A list of all runs associated with the project can be obtained in several different ways, eg.
+Important fields include `sample_id` and `run_id`. A list of all runs associated with the project can be obtained in several different ways, eg.
 
 ```r
-ps$Run.ID
+ps$run_id
 rownames(ps)
 projectRuns(ps)
 ```
@@ -128,7 +129,7 @@ ps["SRR1589726",]
 A table of the number of runs associated with each sample in the project can be obtained with:
 
 ```r
-table(ps$Sample.ID)
+table(ps$sample_id)
 ```
 
 Similarly, a list of sample IDs associated with the project can be obtained with:
@@ -147,10 +148,10 @@ runsBySample(ps,"SRS711891")
 
 ### Working with taxa abundance data
 
-The project summary file contains all of the information needed to be able to directly query the EBI servers for run data. In principle this could be used for querying any run data held on the servers, but currently this package only has functions for querying [OTU](https://en.wikipedia.org/wiki/Operational_taxonomic_unit) data. OTU data associated with a particular run can be downloaded into a data frame with, eg.
+Currently this package only has functions for querying [OTU](https://en.wikipedia.org/wiki/Operational_taxonomic_unit) data. OTU data associated with a particular run can be downloaded into a data frame with, eg.
 
 ```r
-run = getRunOtu(ps,"SRR1589726")
+run = getRunOtu("SRR1589726")
 ```
 
 This data frame contains information on all OTUs encountered in the run, one row per OTU. The structure of the frame can be probed with:
@@ -171,7 +172,7 @@ plot(octav(run$Count),main="Preston plot")
 The function `mergeOtu` can be used to merge together two OTU data frames to produce a new OTU data frame.
 
 ```r
-run2 = getRunOtu(ps,"SRR1589727")
+run2 = getRunOtu("SRR1589727")
 runMerged = mergeOtu(run,run2)
 plot(octav(runMerged$Count),main="Preston plot for merged runs")
 ```

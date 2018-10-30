@@ -24,22 +24,23 @@ str(pl)
 dim(pl)
 
 
-pl$Study.ID
+pl$accession
 
 
 rownames(pl)
 
 
-pl$Study.ID[pl$Number.Of.Samples >= 100]
+pl$accession[pl$samples_count >= 100]
 
 
-pl$Study.ID[grep("16S",pl$Study.Name)]
-pl$Study.ID[grep("sludge",pl$Study.Name)]
-pl$Study.ID[grep("Tara",pl$Study.Name)]
-pl$Study.ID[agrep("human gut",pl$Study.Name)]
+pl$accession[grep("16S",pl$study_name)]
+pl$accession[grep("sludge",pl$study_name)]
+pl$accession[grep("Tara",pl$study_name)]
+pl$accession[agrep("human gut",pl$study_name)]
 
 
-pl["ERP001736",]
+pl$accession[pl$secondary_accession=="ERP001736"]
+pl["MGYS00000410",]
 
 
 ps = getProjectSummary("SRP047083")
@@ -49,7 +50,7 @@ str(ps)
 dim(ps)
 
 
-ps$Run.ID
+ps$run_id
 rownames(ps)
 projectRuns(ps)
 
@@ -57,7 +58,7 @@ projectRuns(ps)
 ps["SRR1589726",]
 
 
-table(ps$Sample.ID)
+table(ps$sample_id)
 
 
 projectSamples(ps)
@@ -66,7 +67,7 @@ projectSamples(ps)
 runsBySample(ps,"SRS711891")
 
 
-run = getRunOtu(ps,"SRR1589726")
+run = getRunOtu("SRR1589726")
 
 
 str(run)
@@ -76,7 +77,7 @@ dim(run)
 plot(octav(run$Count),main="Preston plot")
 
 
-run2 = getRunOtu(ps,"SRR1589727")
+run2 = getRunOtu("SRR1589727")
 runMerged = mergeOtu(run,run2)
 plot(octav(runMerged$Count),main="Preston plot for merged runs")
 
