@@ -66,7 +66,7 @@ library(vegan)
 ```
 
 ```
-## This is vegan 2.5-5
+## This is vegan 2.5-4
 ```
 
 If they are not installed, then can be installed from CRAN with: `install.packages(c("sads","vegan"))`
