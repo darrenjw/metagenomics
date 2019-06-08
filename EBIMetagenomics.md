@@ -36,7 +36,7 @@ example(getProjectsList)
 
 ### Working with the projects list
 
-If you already know the `projectID` of the study you are interested in, you can skip this section. The projects list allows high-level exploration of the projects contained in the [EBI Metagenomics Portal](https://www.ebi.ac.uk/metagenomics/). We typically begin by obtaining the latest version of the list:
+If you already know the `projectID` of the study you are interested in, you can skip this section. The projects list allows high-level exploration of the projects contained in [MGnify](https://www.ebi.ac.uk/metagenomics/). We typically begin by obtaining the latest version of the list:
 
 ```r
 pl = getProjectsList()
