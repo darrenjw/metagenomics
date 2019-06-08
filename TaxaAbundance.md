@@ -18,7 +18,7 @@
 * R is a language for statistical computing, modelling, data analysis and visualisation - www.r-project.org
 * It is free, open source and cross-platform
 * There are good free IDEs, such as [RStudio](https://www.rstudio.com/)
-* There are thousands for packages for R, managed in a mirrored repository, known as [CRAN](cran.r-project.org), the comprehensive R archive network
+* There are thousands for packages for R, managed in a mirrored repository, known as [CRAN](https://cran.r-project.org), the comprehensive R archive network
 * [Bioconductor](https://bioconductor.org/) is another R repository focusing specifically on high-throughput genomic data, containing over one thousand packages
 
 It is possible to analyse raw sequencing data using Bioconductor packages such as [ShortRead](https://bioconductor.org/packages/release/bioc/html/ShortRead.html), but that is a different subject...
@@ -246,7 +246,7 @@ Note that this package requires abundance data in the SAD form, as given by the 
 
 
 
-#### (C) 2016-18 Darren J Wilkinson
+#### (C) 2016-19 Darren J Wilkinson
 
 
 
