@@ -1,0 +1,214 @@
+# MGnify data from R
+
+## Introduction and installation
+
+MGnify (https://www.ebi.ac.uk/metagenomics/) is a rich source of a range of metagenomics data, including data on taxa abundance, which often comes from 16S profiling.
+
+It is perfectly possible to use the [web portal](https://www.ebi.ac.uk/metagenomics/) to search and browse for data of interest, then download required data in CSV or tab-delimited format. This can then be loaded into R from the local file system. Although this is possible, it quickly becomes slow, cumbersome and error-prone (though the [bulk download facility](https://github.com/ProteinsWebTeam/ebi-metagenomics/wiki/Downloading-results-programmatically) makes it much less so). For many purposes it is better to be able to query the data directly from an R session, and this enables automated data retrieval and analysis workflows. 
+
+I have written a small R package called [ebimetagenomics](http://r-forge.r-project.org/projects/ebimetagenomics/) for querying EBI Metagenomics data using the [MGnify API](https://emg-docs.readthedocs.io/en/latest/api.html). It should be possible to install this directly from [CRAN](https://cran.r-project.org/web/packages/ebimetagenomics/) with `install.packages("ebimetagenomics")`. However, this package is currently undergoing rapid development, so it is probably better to install the latest version directly from [R-Forge](https://r-forge.r-project.org/) with `install.packages("ebimetagenomics", repos="http://r-forge.r-project.org")` and update it regularly. Note that if you are installing from R-Forge, you may need to manually install some dependencies from CRAN (if you installing from CRAN, dependencies should be automatically pulled in).
+
+Once installed, it can be loaded with:
+
+```{r em-1}
+library(ebimetagenomics)
+```
+
+Help can be obtained with:
+
+```{r em-2,eval=FALSE}
+help(package="ebimetagenomics")
+```
+
+This will list the functions provided by the package, together with very brief descriptions. Further information about each function can be obtained with, eg.
+
+```{r em-3,eval=FALSE}
+?getProjectsList
+```
+
+Note that there are examples illustrating the use of every function. These can be run with, eg.
+
+```{r em-4}
+example(getProjectsList)
+```
+
+## A walk-through of the package for querying and downloading taxa abundance data
+
+### Working with the projects list
+
+If you already know the `projectID` of the study you are interested in, you can skip this section. The projects list allows high-level exploration of the projects contained in [MGnify](https://www.ebi.ac.uk/metagenomics/). We typically begin by obtaining the latest version of the list:
+
+```{r em-5}
+pl = getProjectsList()
+```
+
+The function returns a data frame containing the full list of projects, one row per project. The structure of the frame can be probed with:
+
+```{r em-6}
+str(pl)
+dim(pl)
+```
+
+At the time of writing there are over 700 projects, and important fields include `accession` (which corresponds to the `accession` required for the function `getProjectSummary()` in this package), `study_name` and `samples_count`. These can be used to find the ID of a study of interest. For example, a list of *all* project IDs can be obtained with
+
+```{r em-7}
+pl$accession
+```
+
+or
+
+```{r em-8}
+rownames(pl)
+```
+
+A list of studies containing at least 100 samples can be obtained with:
+
+```{r em-9}
+pl$accession[pl$samples_count >= 100]
+```
+
+A list of studies with name containing particular text can be obtained with commands like:
+
+```{r em-10}
+pl$accession[grep("16S",pl$study_name)]
+pl$accession[grep("sludge",pl$study_name)]
+pl$accession[grep("Tara",pl$study_name)]
+pl$accession[agrep("human gut",pl$study_name)]
+```
+
+The information relating to one particular study can be extracted with, eg.
+
+```{r em-11}
+pl$accession[pl$secondary_accession=="ERP001736"]
+pl["MGYS00000410",]
+```
+
+### Working with a project summary
+
+Once a study of interest has been identified, a more detailed project summary can be downloaded into a data frame with, eg.
+
+```{r em-12}
+ps = getProjectSummary("SRP047083")
+```
+
+This data frame lists all *runs* associated with the project, one row per run. Note that there can be multiple runs per sample. The structure of the frame can be probed with:
+
+```{r em-13}
+str(ps)
+dim(ps)
+```
+
+Important fields include `sample_id` and `run_id`. A list of all runs associated with the project can be obtained in several different ways, eg.
+
+```{r em-14}
+ps$run_id
+rownames(ps)
+projectRuns(ps)
+```
+
+If a particular run ID is known and of interest, the information associated with that particular run can be extracted with, eg.
+
+```{r em-15}
+ps["SRR1589726",]
+```
+
+A table of the number of runs associated with each sample in the project can be obtained with:
+
+```{r em-16}
+table(ps$sample_id)
+```
+
+Similarly, a list of sample IDs associated with the project can be obtained with:
+
+```{r em-17}
+projectSamples(ps)
+```
+
+**Note** the *convention used in this package* that functions beginning with `get` involve a query over the *internet* to the EBI servers, and functions which do not begin with `get` do not.
+
+Given a particular sample ID, a list of runs associated with that sample ID can be obtained with, eg.:
+
+```{r em-18}
+runsBySample(ps,"SRS711891")
+```
+
+### Working with taxa abundance data
+
+Currently this package only has functions for querying [OTU](https://en.wikipedia.org/wiki/Operational_taxonomic_unit) data. OTU data associated with a particular run can be downloaded into a data frame with, eg.
+
+```{r em-19}
+run = getRunOtu("SRR1589726")
+```
+
+This data frame contains information on all OTUs encountered in the run, one row per OTU. The structure of the frame can be probed with:
+
+```{r em-20}
+str(run)
+dim(run)
+```
+
+The data frame contains three variables: `OTU`, corresponding to the OTU ID, `Count`, representing the number of times the OTU was encountered in the run, and `Tax`, a string containing a taxonomic classification associated with the OTU. 
+
+Note that the function `getRunOtu` contains two optional Boolean arguments, `verb` and `plot.preston`, both of which default to `FALSE`. The former simply echos the run ID to the console, and the latter displays a [Preston plot](https://en.wikipedia.org/wiki/Relative_species_abundance) for the OTU data. This can be useful to get a quick visual understanding of the nature of the run. After downloading, a plot can be constructed manually with:
+
+```{r em-21}
+plot(octav(run$Count),main="Preston plot")
+```
+
+The function `mergeOtu` can be used to merge together two OTU data frames to produce a new OTU data frame.
+
+```{r em-22}
+run2 = getRunOtu("SRR1589727")
+runMerged = mergeOtu(run,run2)
+plot(octav(runMerged$Count),main="Preston plot for merged runs")
+```
+
+More than two OTU data frames can be merged in this way. See the `?mergeOtu` example for how to merge a list of OTU data frames. It is often desirable to download all of the runs associated with a particular sample and to merge the run OTU data frames together to give an overall OTU data frame for the sample. The function `getSampleOtu` automates this process.
+
+It can be run in its simplest form as `run=getSampleOtu(ps,"SRS711891")` but it too has optional Boolean arguments `verb` and `plot.preston`. Here `verb` defaults to `TRUE`, since it is usually useful to have a progress update, and the `plot.preston` argument is often worth using to "see" the data as it is being downloaded.
+
+```{r em-23}
+run=getSampleOtu(ps,"SRS711891",plot.preston=TRUE)
+plot(octav(run$Count),main="Preston plot for sample SRS711891")
+dim(run)
+```
+
+The taxa abundance count data now downloaded into the R session can be utilised in the same way as any other species abundance data in R.
+
+Note that the package includes the function `convertOtuTad()` which re-tabulates OTU counts as a taxa abundance distribution (TAD), and `plotOtu()`, which does a selection of 4 plots for a given set of OTU counts.
+
+```{r em-24}
+head(convertOtuTad(run))
+plotOtu(run)
+```
+
+Commonly required stats associated with OTU counts can be computed with the function `analyseOtu()`.
+
+```{r em-25}
+analyseOtu(run)
+```
+
+As well as computing various different estimates of the total number of taxa in the community that was sampled, it also computes estimates (assuming a Poisson-log-normal TAD) of the number of sequences required in order to observe a given fraction of the total species present. This can be useful for estimating required sequencing effort. 
+Several of the fields should be familiar from the `vegan` function `estimateR`. The `breakaway` estimate has also been included. `S.vln` is Preston's veiled log-normal method and `S.pln` is an estimate from a Poisson-log-Normal SAD fit. Under the same assumption of an underlying Poisson-log-Normal species abundance distribution (and using the same fit), `N.75`, `N.90`, `N.95` and `N.99` are estimates of the `N.obs` required in order to obtain 75%, 90%, 95% and 99% species coverage in a future sample.
+
+### Fitting TADs
+
+If we are interested in assessing whether a Poisson-log-Normal assumption is reasonable, we could try fitting some different TADs for comparison.
+```{r em-26}
+models = lapply(c("lnorm","poilog","ls","mzsm"), function(m){fitsad(run$Count,m)})
+models
+lapply(models, function(x){x@min})
+```
+Note that `poilog` has (by far) the largest fitted log-likelihood (or equivalently, smallest negative log-likelihood), suggesting a better fit to the data. This isn't a formal test of model adequacy, but suggests that this model is at least better than other commonly used alternatives. This is confirmed by looking at diagnostic plots. For example,
+```{r em-27}
+op=par(mfrow=c(2,2))
+plot(models[[1]])
+par(op)
+```
+shows a poor fit for "lnorm". Repeating for `[[3]]` and `[[4]]` shows even worse fits for "ls" and "mzsm". Repeating for `[[2]]` shows a very good fit, if the plot function doesn't crash, which it sometimes does. This illustrates an important issue: although population ecologists have been thinking about species abundance for decades, they haven't always been thinking about the sample sizes and diversity associated with some metagenomic samples, and so some of the available tools sometimes struggle to scale up to metagenomic data sets.
+
+
+
+#### (C) 2016-19 Darren J Wilkinson
+
+
