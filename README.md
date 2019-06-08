@@ -4,7 +4,7 @@ Materials for taxa abundance/metagenomics hands-on training session
 
 ### Part 1
 * [Working with taxa abundance data in R](TaxaAbundance.md)
-* [Working with the EBI Metagenomics portal from R](EBIMetagenomics.md)
+* [Working with the MGnify portal from R](EBIMetagenomics.md)
 
 ### Part 2
 * [**Exercises** on taxa abundance data retrieval and analysis](Exercise.md)
