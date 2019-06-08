@@ -40,7 +40,7 @@ There are a *huge* number of useful software tools relating to population ecolog
 
 In this session we will mainly use `sads` and `vegan`. Assuming that R is installed and running, these can be loaded with:
 
-```r
+```{r ta-1}
 library(sads)
 library(vegan)
 ```
@@ -51,7 +51,7 @@ If they are not installed, then can be installed from CRAN with: `install.packag
 
 The `sads` package can be loaded, and information about its use obtained in the usual R ways:
 
-```r
+```{r ta-2,eval=FALSE}
 library(sads)
 help(package="sads")
 ?"sads-package"
@@ -63,7 +63,7 @@ example(octav)
 
 We will start with the analysis of the `bci` dataset in the `sads` package. This is a classical ecological dataset, measuring the abundance of different species of tree in a tropical forest plot. We can find out more about it as follows:
 
-```r
+```{r ta-3}
 ?bci
 length(bci)
 head(bci)
@@ -71,13 +71,13 @@ head(bci)
 
 We can do a very simple plot of the abundance of each species as follows:
 
-```r
+```{r ta-4}
 barplot(bci,xlab="Species",ylab="Abundance")
 ```
 
 If we prefer, we could first order the species in decreasing order of abundance:
 
-```r
+```{r ta-5}
 bci2 = bci[order(-bci)]
 head(bci2)
 barplot(bci2,xlab="Species",ylab="Abundance")
@@ -85,14 +85,14 @@ barplot(bci2,xlab="Species",ylab="Abundance")
 
 This is not dissimilar to a [rank abundance diagram](https://en.wikipedia.org/wiki/Relative_species_abundance) (Whittaker plot), which can be produced with the aid of the `sads` function `rad()`:
 
-```r
+```{r ta-6}
 plot(rad(bci))
 head(rad(bci))
 ```
 
 However, ecologists often like to think in terms of species abundance distributions (SADs), and for this it can be helpful to think about the number of species having a given abundance. We can re-tabulate our data as a SAD with the help of the following function:
 
-```r
+```{r ta-7}
 abund2sad <- function(abund) {
   sad = as.data.frame(table(abund))
   names(sad) = c("abund","Freq")
@@ -101,9 +101,10 @@ abund2sad <- function(abund) {
 }
 ```
 
+
 We can then convert the `bci` data and plot the SAD as follows:
 
-```r
+```{r ta-8}
 sad = abund2sad(bci)
 head(sad)
 barplot(sad$Freq,names.arg=sad$abund,xlab="Abundance",ylab="# species",main="SAD")
@@ -111,7 +112,7 @@ barplot(sad$Freq,names.arg=sad$abund,xlab="Abundance",ylab="# species",main="SAD
 
 In fact, this kind of data is typically displayed in the form of a histogram with exponentially increasing bins, known as a *Preston plot*. We can plot these in R with the help of the `octav()` function from the `sads` package.
 
-```r
+```{r ta-9}
 octav(bci)
 plot(octav(bci))
 ```
@@ -126,7 +127,7 @@ One of the key statistical issues in modelling data of this sort is partial obse
 
 Let's start by generating a synthetic data set corresponding to a fully observed population containing 1000 species having a log-normal TAD.
 
-```r
+```{r ta-10}
 set.seed(123)
 comm = rsad(S=1000,frac=1,sad="lnorm",coef=list(meanlog=5,sdlog=2))
 length(comm)
@@ -135,7 +136,7 @@ sum(comm)
 
 Note that I just set the random seed for reproducibility. Also note that there aren't exactly 1,000 species in the sample (due to the sampling model and species with very low abundance), and that the sample corresponds to the identification of over 1 million individuals. So in the context of metagenomics, this might correspond to over 1 million 16S matches in a sequencing run clustered into roughly 1,000 OTUs. We now know how to plot this kind of data:
 
-```r
+```{r ta-11}
 op=par(mfrow=c(2,2))
 barplot(comm,xlab="Species",ylab="Abundance",main="Taxa abundance")
 tad = abund2sad(comm)
@@ -150,7 +151,7 @@ Note that the Preston plot looks very Gaussian, which is as we would expect, due
 
 Now let simulate a synthetic sample corresponding to a small fraction (0.05%) of the same population with 1,000 species. 
 
-```r
+```{r ta-12}
 commFull=comm
 comm=rsad(S=1000,frac=0.0005,sad="lnorm",coef=list(meanlog=5,sdlog=2))
 length(comm)
@@ -159,7 +160,7 @@ sum(comm)
 
 Here we have only observed 190 species, corresponding to 407 individuals. We can plot this using exactly the same code as before.
 
-```r
+```{r ta-13}
 op=par(mfrow=c(2,2))
 barplot(comm,xlab="Species",ylab="Abundance",main="Taxa abundance")
 tad = abund2sad(comm)
@@ -176,7 +177,7 @@ The key point to notice is that the species abundance distribution for this frac
 
 For our synthetic data problem we have kept both the "full" sample and the fractionally observed sample. As an initial sanity check, we can try fitting a SAD model to our full sample, using the function `fitsad()` in the `sads` package.
 
-```r
+```{r ta-14}
 mod = fitsad(commFull,"lnorm")
 summary(mod)
 par(mfrow=c(2,2))
@@ -186,7 +187,7 @@ par(op)
 
 We confirm that in this case our fit to a log-normal SAD is excellent, and our estimated coefficients are very close to the "true" values of 5 and 2. Now let's try again with our fractional sample.
 
-```r
+```{r ta-15}
 mod = fitsad(comm,"lnorm")
 summary(mod)
 par(mfrow=c(2,2))
@@ -196,7 +197,7 @@ par(op)
 
 Here we see that the fit is rather poor, and that the estimated parameters are also far from the true values used to generate the data. However, we know that our sample has been generated from a (Poisson) sampling mechanism from an underlying log-normal population. This is consistent with a Poisson-log-normal model, so we can re-fit using that.
 
-```r
+```{r ta-16}
 mod = fitsad(comm,"poilog")
 summary(mod)
 par(mfrow=c(2,2))
@@ -213,18 +214,18 @@ See the vignette for the package: `vignette("sads_intro",package="sads")` for a 
 Given the observed sample, and its observed species richness, it is natural to want to estimate the true biodiversity of the population that has been sampled. As previously discussed, this is a non-trivial statistical problem, but there are some well-known estimators implemented in the aforementioned `vegan` package.
 
 We can load up `vegan` and get a list of vignettes with:
-```r
+```{r ta-17}
 library(vegan)
 vignette(package="vegan")
 ```
 You will see that there are several useful vignettes giving a tutorial introduction to several different aspects of the package functionality. For the purposes of this session, the `diversity-vegan` vignette is of particular interest.
-```r
+```{r ta-18,eval=FALSE}
 vignette("diversity-vegan")
 ```
 When you have time (after this session), it would be worth spending some time working through this document carefully.
 
 We can compute some estimates of species diversity from our sample as follows:
-```r
+```{r ta-19}
 estimateR(commFull)
 estimateR(comm)
 ```
@@ -235,7 +236,7 @@ We get the Chao estimator and the adjusted Chao estimator (ACE), together with e
 
 Note finally that there are other available methods for species richness estimation, and some of these are implemented in other R packages on CRAN. For example, the package `breakaway` implements some methods recently proposed in the literature. If this package is installed (if not, `install.packages("breakaway")`), we can use it as follows.
 
-```r
+```{r ta-20}
 library(breakaway)
 breakaway(abund2sad(commFull))
 breakaway(abund2sad(comm))
