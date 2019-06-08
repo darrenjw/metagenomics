@@ -1,10 +1,4 @@
 
-install.packages("ebimetagenomics")
-
-
-install.packages("ebimetagenomics", repos="http://R-Forge.R-project.org")
-
-
 library(ebimetagenomics)
 
 
