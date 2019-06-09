@@ -14,6 +14,9 @@ fragments: $(FRAGMENTS)
 	Rscript -e "library(knitr); knit('$<')"
 
 
+edit:
+	emacs *.Rmd README.md &
+
 clean:
 	rm -f *~ $(FRAGMENTS)
 
