@@ -10,7 +10,7 @@ I have written a small R package called [ebimetagenomics](http://r-forge.r-proje
 
 Once installed, it can be loaded with:
 
-```{r em-1}
+```{r em-1,message=FALSE}
 library(ebimetagenomics)
 ```
 
@@ -36,9 +36,9 @@ example(getProjectsList)
 
 ### Working with the projects list
 
-If you already know the `projectID` of the study you are interested in, you can skip this section. The projects list allows high-level exploration of the projects contained in [MGnify](https://www.ebi.ac.uk/metagenomics/). We typically begin by obtaining the latest version of the list:
+If you already know the accession ID of the study you are interested in, you can skip this section. The projects list allows high-level exploration of the projects contained in [MGnify](https://www.ebi.ac.uk/metagenomics/). We typically begin by obtaining the latest version of the list:
 
-```{r em-5}
+```{r em-5,cache=TRUE}
 pl = getProjectsList()
 ```
 
@@ -49,45 +49,50 @@ str(pl)
 dim(pl)
 ```
 
-At the time of writing there are over 700 projects, and important fields include `accession` (which corresponds to the `accession` required for the function `getProjectSummary()` in this package), `study_name` and `samples_count`. These can be used to find the ID of a study of interest. For example, a list of *all* project IDs can be obtained with
+At the time of writing there are nearly three thousand studies, and important fields include `accession` (which corresponds to the `accession` required for the function `getProjectSummary()` in this package), `study_name` and `samples_count`. These can be used to find the ID of a study of interest. For example, a list of *all* study IDs can be obtained with
 
-```{r em-7}
+```{r em-7,results="hide"}
 pl$accession
 ```
 
 or
 
-```{r em-8}
+```{r em-8,results="hide"}
 rownames(pl)
 ```
 
-A list of studies containing at least 100 samples can be obtained with:
+A list of studies containing at least 200 samples can be obtained with:
 
 ```{r em-9}
-pl$accession[pl$samples_count >= 100]
+pl$accession[pl$samples_count >= 200]
 ```
 
 A list of studies with name containing particular text can be obtained with commands like:
 
 ```{r em-10}
-pl$accession[grep("16S",pl$study_name)]
-pl$accession[grep("sludge",pl$study_name)]
-pl$accession[grep("Tara",pl$study_name)]
-pl$accession[agrep("human gut",pl$study_name)]
+pl$accession[grep("16S", pl$study_name)]
+pl$accession[grep("sludge", pl$study_name)]
+pl$accession[grep("Tara ", pl$study_name)]
+pl$accession[agrep("human gut", pl$study_name)]
+```
+
+More sophisticated searches are also possible:
+```{r em-10b}
+soil = pl$accession[grep("soil", pl$biomes, ignore.case=TRUE)]
+pl$accession[grep("human.*fecal", pl$biomes, ignore.case=TRUE)]
 ```
 
 The information relating to one particular study can be extracted with, eg.
 
 ```{r em-11}
-pl$accession[pl$secondary_accession=="ERP001736"]
-pl["MGYS00000410",]
+pl[soil[1],]
 ```
 
 ### Working with a project summary
 
 Once a study of interest has been identified, a more detailed project summary can be downloaded into a data frame with, eg.
 
-```{r em-12}
+```{r em-12,cache=TRUE}
 ps = getProjectSummary("SRP047083")
 ```
 
@@ -100,7 +105,7 @@ dim(ps)
 
 Important fields include `sample_id` and `run_id`. A list of all runs associated with the project can be obtained in several different ways, eg.
 
-```{r em-14}
+```{r em-14,results="hide"}
 ps$run_id
 rownames(ps)
 projectRuns(ps)
@@ -136,7 +141,7 @@ runsBySample(ps,"SRS711891")
 
 Currently this package only has functions for querying [OTU](https://en.wikipedia.org/wiki/Operational_taxonomic_unit) data. OTU data associated with a particular run can be downloaded into a data frame with, eg.
 
-```{r em-19}
+```{r em-19,cache=TRUE}
 run = getRunOtu("SRR1589726")
 ```
 
@@ -157,7 +162,7 @@ plot(octav(run$Count),main="Preston plot")
 
 The function `mergeOtu` can be used to merge together two OTU data frames to produce a new OTU data frame.
 
-```{r em-22}
+```{r em-22,cache=TRUE}
 run2 = getRunOtu("SRR1589727")
 runMerged = mergeOtu(run,run2)
 plot(octav(runMerged$Count),main="Preston plot for merged runs")
@@ -167,8 +172,15 @@ More than two OTU data frames can be merged in this way. See the `?mergeOtu` exa
 
 It can be run in its simplest form as `run=getSampleOtu(ps,"SRS711891")` but it too has optional Boolean arguments `verb` and `plot.preston`. Here `verb` defaults to `TRUE`, since it is usually useful to have a progress update, and the `plot.preston` argument is often worth using to "see" the data as it is being downloaded.
 
-```{r em-23}
+```{r em-23b,eval=FALSE}
 run=getSampleOtu(ps,"SRS711891",plot.preston=TRUE)
+```
+
+```{r em-23,cache=TRUE,echo=FALSE}
+run=getSampleOtu(ps,"SRS711891",plot.preston=FALSE)
+```
+
+```{r em-23c}
 plot(octav(run$Count),main="Preston plot for sample SRS711891")
 dim(run)
 ```
@@ -194,7 +206,7 @@ Several of the fields should be familiar from the `vegan` function `estimateR`. 
 ### Fitting TADs
 
 If we are interested in assessing whether a Poisson-log-Normal assumption is reasonable, we could try fitting some different TADs for comparison.
-```{r em-26}
+```{r em-26,cache=TRUE}
 models = lapply(c("lnorm","poilog","ls","mzsm"), function(m){fitsad(run$Count,m)})
 models
 lapply(models, function(x){x@min})
