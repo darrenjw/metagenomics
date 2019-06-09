@@ -40,7 +40,7 @@ There are a *huge* number of useful software tools relating to population ecolog
 
 In this session we will mainly use `sads` and `vegan`. Assuming that R is installed and running, these can be loaded with:
 
-```{r ta-1,results="hide"}
+```{r ta-1,warning=FALSE}
 library(sads)
 library(vegan)
 ```
