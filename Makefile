@@ -15,7 +15,7 @@ fragments: $(FRAGMENTS)
 
 
 edit:
-	emacs *.Rmd README.md &
+	emacs Makefile *.Rmd Exercise.md README.md &
 
 clean:
 	rm -f *~ $(FRAGMENTS)
