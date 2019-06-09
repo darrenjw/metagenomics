@@ -150,3 +150,6 @@ breakaway(abund2sad(commFull))
 
 breakaway(abund2sad(comm))
 
+
+breakaway_nof1(abund2sad(comm))
+

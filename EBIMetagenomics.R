@@ -26,25 +26,26 @@ pl$accession
 rownames(pl)
 
 
-pl$accession[pl$samples_count >= 100]
+pl$accession[pl$samples_count >= 200]
 
 
-pl$accession[grep("16S",pl$study_name)]
+pl$accession[grep("16S", pl$study_name)]
 
 
-pl$accession[grep("sludge",pl$study_name)]
+pl$accession[grep("sludge", pl$study_name)]
 
 
-pl$accession[grep("Tara",pl$study_name)]
+pl$accession[grep("Tara ", pl$study_name)]
 
 
-pl$accession[agrep("human gut",pl$study_name)]
+pl$accession[agrep("human gut", pl$study_name)]
 
 
-pl$accession[pl$secondary_accession=="ERP001736"]
+soil = pl$accession[grep("soil", pl$biomes, ignore.case=TRUE)]
+pl$accession[grep("human.*fecal", pl$biomes, ignore.case=TRUE)]
 
 
-pl["MGYS00000410",]
+pl[soil[1],]
 
 
 ps = getProjectSummary("SRP047083")
@@ -57,11 +58,7 @@ dim(ps)
 
 
 ps$run_id
-
-
 rownames(ps)
-
-
 projectRuns(ps)
 
 

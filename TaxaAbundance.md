@@ -575,7 +575,7 @@ estimateR(comm)
 ## 190.00000 420.00000  61.89537 393.84194  11.43052
 ```
 
-We get the Chao estimator and the adjusted Chao estimator (ACE), together with estimates of standard error. For our full sample, the estimators correctly deduce that the vast majority of species are present in our sample. For our fractional sample, the estimators detect that there are a significant number of unobserved species. However, they substantially underestimate the true species richness of the parent population. The Chao estimator is well-known to underestimate true species diversity, but it serves as a useful lower bound. 
+We get the Chao estimator and the adjusted Chao estimator (ACE), together with estimates of standard error. For our full sample, the estimators correctly deduce that the vast majority of species are present in our sample. For our fractional sample, the estimators detect that there are a significant number of unobserved species. However, they substantially underestimate the true species richness of the parent population. The Chao estimator is well-known to often underestimate true species diversity, but it serves as a useful lower bound. 
 
 #### Breakaway
 
@@ -614,9 +614,21 @@ breakaway(abund2sad(comm))
 
 ![plot of chunk ta-20](figure/ta-20-1.png)
 
-Note that this package requires abundance data in the SAD form, as given by the output of the function `abund2sad()`. Further details are given in the package documentation. In this case the estimate is worse than that of the Chao estimator, but this won't always be so. Diversity estimation is a non-trivial problem!
+Note that this package requires abundance data in the SAD form, as given by the output of the function `abund2sad()`. Further details are given in the package documentation. In this case the estimate is worse than that of the Chao estimator, but this won't always be so. 
 
+When working with real (as opposed to synthetically generated) data, it is sometimes the case that the singleton count (the number of species observed exactly once) may be spurious. In the case of metagenomics data, for example, the spurious taxa could be the result of sequencing error. In this case, the `breakaway` package includes a function for estimating total diversity which does not use the singleton count.
 
+```r
+breakaway_nof1(abund2sad(comm)[-1,])
+```
+
+```
+## No breakaway models converged.################## breakaway ##################
+## 	The best estimate of total diversity is 152 
+##  	 with std error 33 
+## 	The model employed was the WLRM
+```
+In this case, for our synthetic data with a valid singleton count, this method is obviously not helpful. Diversity estimation is a non-trivial problem!
 
 
 #### (C) 2016-19 Darren J Wilkinson
