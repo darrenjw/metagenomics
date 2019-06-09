@@ -43,30 +43,7 @@ In this session we will mainly use `sads` and `vegan`. Assuming that R is instal
 
 ```r
 library(sads)
-```
-
-```
-## Loading required package: bbmle
-```
-
-```
-## Loading required package: stats4
-```
-
-```r
 library(vegan)
-```
-
-```
-## Loading required package: permute
-```
-
-```
-## Loading required package: lattice
-```
-
-```
-## This is vegan 2.5-5
 ```
 
 If they are not installed, then can be installed from CRAN with: `install.packages(c("sads","vegan"))`
