@@ -1,6 +1,10 @@
 # Sample Comparisons
 
-In this session we have mainly been concerned with the taxa abundance distributions within individual runs and samples. In many cases we will also be interested in comparing samples to find interesting differences between them. 
+In this session we have mainly been concerned with the taxa abundance distributions within individual runs and samples. In many cases we will also be interested in comparing samples to find interesting differences between them. This is a big topic which we don't have time to explore in detail now, but I'll just give a quick taster.
+
+We can compare samples at the level of taxa counts, but for some high level analyses, it might make sense to group related taxa together to some level of aggregation. MGNify computes a phylum-level taxonomy table as part of its standard analysis pipeline, so this can be a good starting point for beginning to investigate sample comparisons.
+
+We could write a function to get the phylum-level table for a given study as follows.
 
 ```{r cache=TRUE}
 library(ebimetagenomics)
@@ -17,20 +21,29 @@ getKP = function(studyID) {
 }
 ```
 
+I will add a similar function to the next release of the `ebimetagenomics` R package. We can then use it to get the table for a study of interest. MGYS00004696 is a study of fungal communities across four coastal marine habitats in North Carolina.
+
 ```{r cache=TRUE}
 kptab = getKP("MGYS00004696")
-kptab
+str(kptab)
+head(kptab)
 ```
+
+There are many things that one can do with such a table. For some purposes, it might make sense to normalise each column so that it sums to one. This is because different runs often have quite different numbers of successful reads.
 
 ```{r}
 colsums = apply(kptab,2,sum)
 normtab = sweep(kptab,2,colsums,"/")
-normtab
+head(normtab)
 ```
+
+We can "look" at this normalised table using a heatmap.
 
 ```{r}
 heatmap(as.matrix(normtab))
 ```
+
+We can begin to look for similarities and differences between samples using principal components analysis.
 
 ```{r}
 pca = prcomp(t(normtab))
@@ -38,5 +51,5 @@ plot(pca$x[,1],pca$x[,2],pch=19,col=2)
 text(pca$x[,1],pca$x[,2],rownames(pca$x),pos=3,cex=0.6)
 ```
 
-Further analysis can be facilitated by [installing Bioconductor](https://www.bioconductor.org/install/), together with packages such as `DESeq2` and `phyloseq`. However, this is beyond the scope of this session.
+More formal statistical comparisons and analysis can be facilitated by [installing Bioconductor](https://www.bioconductor.org/install/), together with Bioconductor packages such as `DESeq2` and `phyloseq`. However, this is beyond the scope of this short session.
 

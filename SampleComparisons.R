@@ -14,12 +14,15 @@ getKP = function(studyID) {
 
 
 kptab = getKP("MGYS00004696")
-kptab
+str(kptab)
+
+
+head(kptab)
 
 
 colsums = apply(kptab,2,sum)
 normtab = sweep(kptab,2,colsums,"/")
-normtab
+head(normtab)
 
 
 heatmap(as.matrix(normtab))
