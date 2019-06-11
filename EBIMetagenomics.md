@@ -75,17 +75,17 @@ str(pl)
 ```
 
 ```
-## 'data.frame':	1167 obs. of  18 variables:
+## 'data.frame':	1436 obs. of  18 variables:
 ##  $ url                : chr  "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004729?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004728?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004726?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004725?format=csv" ...
-##  $ samples            : logi  NA NA NA NA NA NA ...
-##  $ biomes             : chr  "[OrderedDict([('type', 'biomes'), ('id', 'root:Host-associated:Human:Respiratory system:Nasopharyngeal'), ('lin"| __truncated__ "[OrderedDict([('type', 'biomes'), ('id', 'root:Host-associated:Human:Digestive system:Large intestine:Fecal'), "| __truncated__ "[OrderedDict([('type', 'biomes'), ('id', 'root:Engineered:Lab enrichment:Defined media'), ('links', {'self': 'h"| __truncated__ "[OrderedDict([('type', 'biomes'), ('id', 'root:Engineered:Lab enrichment:Defined media'), ('links', {'self': 'h"| __truncated__ ...
-##  $ geocoordinates     : logi  NA NA NA NA NA NA ...
-##  $ accession          : chr  "MGYS00004729" "MGYS00004728" "MGYS00004726" "MGYS00004725" ...
-##  $ publications       : logi  NA NA NA NA NA NA ...
-##  $ analyses           : logi  NA NA NA NA NA NA ...
-##  $ samples_count      : int  720 369 1 1 1 1 1 1 1 1 ...
-##  $ bioproject         : chr  "PRJEB18650" "" "PRJEB32056" "PRJEB32055" ...
 ##  $ downloads          : logi  NA NA NA NA NA NA ...
+##  $ bioproject         : chr  "PRJEB18650" "" "PRJEB32056" "PRJEB32055" ...
+##  $ samples_count      : int  720 369 1 1 1 1 1 1 1 1 ...
+##  $ accession          : chr  "MGYS00004729" "MGYS00004728" "MGYS00004726" "MGYS00004725" ...
+##  $ samples            : logi  NA NA NA NA NA NA ...
+##  $ geocoordinates     : logi  NA NA NA NA NA NA ...
+##  $ analyses           : logi  NA NA NA NA NA NA ...
+##  $ publications       : logi  NA NA NA NA NA NA ...
+##  $ biomes             : chr  "[OrderedDict([('type', 'biomes'), ('id', 'root:Host-associated:Human:Respiratory system:Nasopharyngeal'), ('lin"| __truncated__ "[OrderedDict([('type', 'biomes'), ('id', 'root:Host-associated:Human:Digestive system:Large intestine:Fecal'), "| __truncated__ "[OrderedDict([('type', 'biomes'), ('id', 'root:Engineered:Lab enrichment:Defined media'), ('links', {'self': 'h"| __truncated__ "[OrderedDict([('type', 'biomes'), ('id', 'root:Engineered:Lab enrichment:Defined media'), ('links', {'self': 'h"| __truncated__ ...
 ##  $ secondary_accession: chr  "ERP020597" "SRP057027" "ERP114682" "ERP114681" ...
 ##  $ centre_name        : chr  "SC" "UPENNBL" "Veer Narmad South Gujarat University" "Veer Narmad South Gujarat University" ...
 ##  $ is_public          : chr  "True" "True" "True" "True" ...
@@ -101,7 +101,7 @@ dim(pl)
 ```
 
 ```
-## [1] 1167   18
+## [1] 1436   18
 ```
 
 At the time of writing there are nearly three thousand studies, and important fields include `accession` (which corresponds to the `accession` required for the function `getProjectSummary()` in this package), `study_name` and `samples_count`. These can be used to find the ID of a study of interest. For example, a list of *all* study IDs can be obtained with
@@ -136,7 +136,10 @@ pl$accession[pl$samples_count >= 200]
 ## [29] "MGYS00003670" "MGYS00003666" "MGYS00003659" "MGYS00003619"
 ## [33] "MGYS00003509" "MGYS00003505" "MGYS00003504" "MGYS00003488"
 ## [37] "MGYS00003481" "MGYS00003476" "MGYS00003469" "MGYS00003468"
-## [41] "MGYS00003194"
+## [41] "MGYS00003194" "MGYS00002722" "MGYS00002713" "MGYS00002706"
+## [45] "MGYS00002684" "MGYS00002672" "MGYS00002671" "MGYS00002670"
+## [49] "MGYS00002586" "MGYS00002554" "MGYS00002550" "MGYS00002534"
+## [53] "MGYS00002481"
 ```
 
 A list of studies with name containing particular text can be obtained with commands like:
@@ -157,7 +160,11 @@ pl$accession[grep("16S", pl$study_name)]
 ## [29] "MGYS00003997" "MGYS00003993" "MGYS00003986" "MGYS00003985"
 ## [33] "MGYS00003957" "MGYS00003908" "MGYS00003851" "MGYS00003754"
 ## [37] "MGYS00003724" "MGYS00003722" "MGYS00003716" "MGYS00003170"
-## [41] "MGYS00003168"
+## [41] "MGYS00003168" "MGYS00003081" "MGYS00003067" "MGYS00003066"
+## [45] "MGYS00002953" "MGYS00002936" "MGYS00002781" "MGYS00002776"
+## [49] "MGYS00002725" "MGYS00002669" "MGYS00002665" "MGYS00002605"
+## [53] "MGYS00002541" "MGYS00002527" "MGYS00002523" "MGYS00002501"
+## [57] "MGYS00002490"
 ```
 
 ```r
@@ -189,7 +196,8 @@ pl$accession[agrep("human gut", pl$study_name)]
 ##  [5] "MGYS00003581" "MGYS00003577" "MGYS00003575" "MGYS00003536"
 ##  [9] "MGYS00003505" "MGYS00003481" "MGYS00003478" "MGYS00003477"
 ## [13] "MGYS00003476" "MGYS00003469" "MGYS00003367" "MGYS00003346"
-## [17] "MGYS00003240" "MGYS00003191"
+## [17] "MGYS00003240" "MGYS00003191" "MGYS00002961" "MGYS00002690"
+## [21] "MGYS00002687" "MGYS00002677"
 ```
 
 More sophisticated searches are also possible:
@@ -206,7 +214,8 @@ pl$accession[grep("human.*fecal", pl$biomes, ignore.case=TRUE)]
 ## [13] "MGYS00003480" "MGYS00003479" "MGYS00003478" "MGYS00003475"
 ## [17] "MGYS00003469" "MGYS00003468" "MGYS00003441" "MGYS00003367"
 ## [21] "MGYS00003346" "MGYS00003199" "MGYS00003191" "MGYS00003147"
-## [25] "MGYS00003135"
+## [25] "MGYS00003135" "MGYS00002961" "MGYS00002690" "MGYS00002687"
+## [29] "MGYS00002685" "MGYS00002677"
 ```
 
 The information relating to one particular study can be extracted with, eg.
@@ -219,16 +228,14 @@ pl[soil[1],]
 ```
 ##                                                                                    url
 ## MGYS00004688 https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004688?format=csv
-##              samples
-## MGYS00004688      NA
+##              downloads  bioproject samples_count    accession samples
+## MGYS00004688        NA PRJNA284836             1 MGYS00004688      NA
+##              geocoordinates analyses publications
+## MGYS00004688             NA       NA           NA
 ##                                                                                                                                                                                                                                                              biomes
 ## MGYS00004688 [OrderedDict([('type', 'biomes'), ('id', 'root:Environmental:Terrestrial:Soil:Uranium contaminated'), ('links', {'self': 'https://www.ebi.ac.uk/metagenomics/api/v1/biomes/root:Environmental:Terrestrial:Soil:Uranium%20contaminated?format=csv'})])]
-##              geocoordinates    accession publications analyses
-## MGYS00004688             NA MGYS00004688           NA       NA
-##              samples_count  bioproject downloads secondary_accession
-## MGYS00004688             1 PRJNA284836        NA           SRP058675
-##              centre_name is_public public_release_date
-## MGYS00004688  BioProject      True                  NA
+##              secondary_accession centre_name is_public public_release_date
+## MGYS00004688           SRP058675  BioProject      True                  NA
 ##                                                                                                                                                                                          study_abstract
 ## MGYS00004688 SJP- Uranium polluted sediment sample collected from Cauvery bank of Kokarayanpettai, Erode District. SJUP- Unpolluted sample collected from agriculture field of Bhavani, Erode District.
 ##                           study_name data_origination         last_update
