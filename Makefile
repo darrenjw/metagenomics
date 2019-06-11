@@ -1,8 +1,8 @@
 # Makefile
 
-FRAGMENTS=EBIMetagenomics.R TaxaAbundance.R
+FRAGMENTS=EBIMetagenomics.R TaxaAbundance.R SampleComparisons.R
 
-HTML=README.html EBIMetagenomics.html TaxaAbundance.html Exercise.html
+HTML=README.html EBIMetagenomics.html TaxaAbundance.html SampleComparisons.html Exercise.html
 
 FORCE:
 	make fragments
