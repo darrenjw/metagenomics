@@ -75,7 +75,7 @@ str(pl)
 ```
 
 ```
-## 'data.frame':	1089 obs. of  18 variables:
+## 'data.frame':	1167 obs. of  18 variables:
 ##  $ url                : chr  "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004729?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004728?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004726?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00004725?format=csv" ...
 ##  $ samples            : logi  NA NA NA NA NA NA ...
 ##  $ biomes             : chr  "[OrderedDict([('type', 'biomes'), ('id', 'root:Host-associated:Human:Respiratory system:Nasopharyngeal'), ('lin"| __truncated__ "[OrderedDict([('type', 'biomes'), ('id', 'root:Host-associated:Human:Digestive system:Large intestine:Fecal'), "| __truncated__ "[OrderedDict([('type', 'biomes'), ('id', 'root:Engineered:Lab enrichment:Defined media'), ('links', {'self': 'h"| __truncated__ "[OrderedDict([('type', 'biomes'), ('id', 'root:Engineered:Lab enrichment:Defined media'), ('links', {'self': 'h"| __truncated__ ...
@@ -101,7 +101,7 @@ dim(pl)
 ```
 
 ```
-## [1] 1089   18
+## [1] 1167   18
 ```
 
 At the time of writing there are nearly three thousand studies, and important fields include `accession` (which corresponds to the `accession` required for the function `getProjectSummary()` in this package), `study_name` and `samples_count`. These can be used to find the ID of a study of interest. For example, a list of *all* study IDs can be obtained with
@@ -136,6 +136,7 @@ pl$accession[pl$samples_count >= 200]
 ## [29] "MGYS00003670" "MGYS00003666" "MGYS00003659" "MGYS00003619"
 ## [33] "MGYS00003509" "MGYS00003505" "MGYS00003504" "MGYS00003488"
 ## [37] "MGYS00003481" "MGYS00003476" "MGYS00003469" "MGYS00003468"
+## [41] "MGYS00003194"
 ```
 
 A list of studies with name containing particular text can be obtained with commands like:
@@ -155,7 +156,8 @@ pl$accession[grep("16S", pl$study_name)]
 ## [25] "MGYS00004044" "MGYS00004024" "MGYS00004015" "MGYS00003998"
 ## [29] "MGYS00003997" "MGYS00003993" "MGYS00003986" "MGYS00003985"
 ## [33] "MGYS00003957" "MGYS00003908" "MGYS00003851" "MGYS00003754"
-## [37] "MGYS00003724" "MGYS00003722" "MGYS00003716"
+## [37] "MGYS00003724" "MGYS00003722" "MGYS00003716" "MGYS00003170"
+## [41] "MGYS00003168"
 ```
 
 ```r
@@ -187,7 +189,7 @@ pl$accession[agrep("human gut", pl$study_name)]
 ##  [5] "MGYS00003581" "MGYS00003577" "MGYS00003575" "MGYS00003536"
 ##  [9] "MGYS00003505" "MGYS00003481" "MGYS00003478" "MGYS00003477"
 ## [13] "MGYS00003476" "MGYS00003469" "MGYS00003367" "MGYS00003346"
-## [17] "MGYS00003240"
+## [17] "MGYS00003240" "MGYS00003191"
 ```
 
 More sophisticated searches are also possible:
@@ -203,7 +205,8 @@ pl$accession[grep("human.*fecal", pl$biomes, ignore.case=TRUE)]
 ##  [9] "MGYS00003575" "MGYS00003536" "MGYS00003511" "MGYS00003481"
 ## [13] "MGYS00003480" "MGYS00003479" "MGYS00003478" "MGYS00003475"
 ## [17] "MGYS00003469" "MGYS00003468" "MGYS00003441" "MGYS00003367"
-## [21] "MGYS00003346"
+## [21] "MGYS00003346" "MGYS00003199" "MGYS00003191" "MGYS00003147"
+## [25] "MGYS00003135"
 ```
 
 The information relating to one particular study can be extracted with, eg.
@@ -251,22 +254,22 @@ str(ps)
 ```
 ## 'data.frame':	2116 obs. of  22 variables:
 ##  $ url                 : chr  "https://www.ebi.ac.uk/metagenomics/api/v1/analyses/MGYA00035043?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/analyses/MGYA00035044?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/analyses/MGYA00035045?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/analyses/MGYA00035046?format=csv" ...
-##  $ experiment_type     : chr  "amplicon" "amplicon" "amplicon" "amplicon" ...
-##  $ assembly            : logi  NA NA NA NA NA NA ...
-##  $ study               : chr  "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000646?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000646?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000646?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000646?format=csv" ...
 ##  $ interpro_identifiers: logi  NA NA NA NA NA NA ...
-##  $ pipeline_version    : num  2 2 2 2 2 2 2 2 2 2 ...
+##  $ study               : chr  "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000646?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000646?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000646?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000646?format=csv" ...
 ##  $ taxonomy_ssu        : logi  NA NA NA NA NA NA ...
 ##  $ go_slim             : logi  NA NA NA NA NA NA ...
+##  $ sample              : chr  "https://www.ebi.ac.uk/metagenomics/api/v1/samples/SRS711896?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/samples/SRS711896?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/samples/SRS711896?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/samples/SRS711896?format=csv" ...
 ##  $ run                 : chr  "https://www.ebi.ac.uk/metagenomics/api/v1/runs/SRR1590371?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/runs/SRR1590376?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/runs/SRR1590377?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/runs/SRR1590374?format=csv" ...
 ##  $ analysis_status     : chr  "completed" "completed" "completed" "completed" ...
-##  $ taxonomy            : logi  NA NA NA NA NA NA ...
-##  $ downloads           : logi  NA NA NA NA NA NA ...
 ##  $ taxonomy_lsu        : logi  NA NA NA NA NA NA ...
-##  $ analysis_summary    : chr  "[{'key': 'Submitted nucleotide sequences', 'value': '29024'}, {'key': 'Nucleotide sequences after format-specif"| __truncated__ "[{'key': 'Submitted nucleotide sequences', 'value': '18346'}, {'key': 'Nucleotide sequences after format-specif"| __truncated__ "[{'key': 'Submitted nucleotide sequences', 'value': '15'}, {'key': 'Nucleotide sequences after format-specific "| __truncated__ "[{'key': 'Submitted nucleotide sequences', 'value': '7262'}, {'key': 'Nucleotide sequences after format-specifi"| __truncated__ ...
 ##  $ go_terms            : logi  NA NA NA NA NA NA ...
-##  $ sample              : chr  "https://www.ebi.ac.uk/metagenomics/api/v1/samples/SRS711896?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/samples/SRS711896?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/samples/SRS711896?format=csv" "https://www.ebi.ac.uk/metagenomics/api/v1/samples/SRS711896?format=csv" ...
 ##  $ accession           : chr  "MGYA00035043" "MGYA00035044" "MGYA00035045" "MGYA00035046" ...
+##  $ experiment_type     : chr  "amplicon" "amplicon" "amplicon" "amplicon" ...
+##  $ analysis_summary    : chr  "[{'key': 'Submitted nucleotide sequences', 'value': '29024'}, {'key': 'Nucleotide sequences after format-specif"| __truncated__ "[{'key': 'Submitted nucleotide sequences', 'value': '18346'}, {'key': 'Nucleotide sequences after format-specif"| __truncated__ "[{'key': 'Submitted nucleotide sequences', 'value': '15'}, {'key': 'Nucleotide sequences after format-specific "| __truncated__ "[{'key': 'Submitted nucleotide sequences', 'value': '7262'}, {'key': 'Nucleotide sequences after format-specifi"| __truncated__ ...
+##  $ taxonomy            : logi  NA NA NA NA NA NA ...
+##  $ pipeline_version    : num  2 2 2 2 2 2 2 2 2 2 ...
+##  $ assembly            : logi  NA NA NA NA NA NA ...
+##  $ downloads           : logi  NA NA NA NA NA NA ...
 ##  $ complete_time       : chr  "2016-03-30T00:00:00" "2016-03-30T00:00:00" "2016-03-30T00:00:00" "2016-03-30T00:00:00" ...
 ##  $ instrument_platform : chr  "ILLUMINA" "ILLUMINA" "ILLUMINA" "ILLUMINA" ...
 ##  $ instrument_model    : chr  "Illumina MiSeq" "Illumina MiSeq" "Illumina MiSeq" "Illumina MiSeq" ...
@@ -302,26 +305,28 @@ ps["SRR1589726",]
 ```
 ##                                                                                   url
 ## SRR1589726 https://www.ebi.ac.uk/metagenomics/api/v1/analyses/MGYA00036503?format=csv
-##            experiment_type assembly
-## SRR1589726        amplicon       NA
+##            interpro_identifiers
+## SRR1589726                   NA
 ##                                                                                study
 ## SRR1589726 https://www.ebi.ac.uk/metagenomics/api/v1/studies/MGYS00000646?format=csv
-##            interpro_identifiers pipeline_version taxonomy_ssu go_slim
-## SRR1589726                   NA                2           NA      NA
-##                                                                             run
-## SRR1589726 https://www.ebi.ac.uk/metagenomics/api/v1/runs/SRR1589726?format=csv
-##            analysis_status taxonomy downloads taxonomy_lsu
-## SRR1589726       completed       NA        NA           NA
-##                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      analysis_summary
-## SRR1589726 [{'key': 'Submitted nucleotide sequences', 'value': '78247'}, {'key': 'Nucleotide sequences after format-specific filtering', 'value': '78247'}, {'key': 'Nucleotide sequences after length filtering', 'value': '76839'}, {'key': 'Nucleotide sequences after undetermined bases filtering', 'value': '76839'}, {'key': 'Nucleotide sequences with predicted CDS', 'value': '1256'}, {'key': 'Nucleotide sequences with InterProScan match', 'value': '989'}, {'key': 'Predicted CDS', 'value': '1261'}, {'key': 'Predicted CDS with InterProScan match', 'value': '990'}, {'key': 'Total InterProScan matches', 'value': '1502'}, {'key': 'Nucleotide sequences with predicted rRNA', 'value': '75518'}]
-##            go_terms
-## SRR1589726       NA
+##            taxonomy_ssu go_slim
+## SRR1589726           NA      NA
 ##                                                                            sample
 ## SRR1589726 https://www.ebi.ac.uk/metagenomics/api/v1/samples/SRS711891?format=csv
-##               accession       complete_time instrument_platform
-## SRR1589726 MGYA00036503 2016-03-30T00:00:00            ILLUMINA
-##            instrument_model     run_id sample_id
-## SRR1589726   Illumina MiSeq SRR1589726 SRS711891
+##                                                                             run
+## SRR1589726 https://www.ebi.ac.uk/metagenomics/api/v1/runs/SRR1589726?format=csv
+##            analysis_status taxonomy_lsu go_terms    accession
+## SRR1589726       completed           NA       NA MGYA00036503
+##            experiment_type
+## SRR1589726        amplicon
+##                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      analysis_summary
+## SRR1589726 [{'key': 'Submitted nucleotide sequences', 'value': '78247'}, {'key': 'Nucleotide sequences after format-specific filtering', 'value': '78247'}, {'key': 'Nucleotide sequences after length filtering', 'value': '76839'}, {'key': 'Nucleotide sequences after undetermined bases filtering', 'value': '76839'}, {'key': 'Nucleotide sequences with predicted CDS', 'value': '1256'}, {'key': 'Nucleotide sequences with InterProScan match', 'value': '989'}, {'key': 'Predicted CDS', 'value': '1261'}, {'key': 'Predicted CDS with InterProScan match', 'value': '990'}, {'key': 'Total InterProScan matches', 'value': '1502'}, {'key': 'Nucleotide sequences with predicted rRNA', 'value': '75518'}]
+##            taxonomy pipeline_version assembly downloads
+## SRR1589726       NA                2       NA        NA
+##                  complete_time instrument_platform instrument_model
+## SRR1589726 2016-03-30T00:00:00            ILLUMINA   Illumina MiSeq
+##                run_id sample_id
+## SRR1589726 SRR1589726 SRS711891
 ```
 
 A table of the number of runs associated with each sample in the project can be obtained with:
